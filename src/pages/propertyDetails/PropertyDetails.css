@@ -1,0 +1,20 @@
+.total-investments{
+    background-color: var(--secondaryColor);
+    color: white;
+    text-align: center;
+    padding: 20px 40px;
+    width: 50%;
+    border-radius: 20px;
+    margin: 20px auto;
+}
+.total-investments span{
+    font-size: large;
+    font-weight: bold;
+}
+.buyTokensBtn{
+    background-color: var(--btnColor);
+    border: none;
+    padding:8px;
+    border-radius: 2px;
+    color: white;
+}
