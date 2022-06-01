@@ -10,6 +10,7 @@ import Details from './pages/details/Details';
 import Bid from './pages/bid/Bid';
 import TokensForSale from './pages/tokenforsale/TokensForSale';
 import Financials from './pages/financials/Financials';
+import Profile from './pages/profile/Profile';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="bid" element={<Bid />} />
           <Route path="tokensforsale" element={<TokensForSale />} />
           </Route>
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
       </BrowserRouter>
 

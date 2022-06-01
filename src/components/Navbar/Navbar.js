@@ -1,32 +1,37 @@
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 import React from 'react'
+import {useLocation} from 'react-router-dom'
+
 const Navbar = () => {
+  const location = useLocation();
+  const path = location.pathname
+  console.log(path)
   return (
     <div>
-      <input type="checkbox" id="check" />
-      <nav>
-        <div className="icon">
-          <b style={{ color: '#109272', fontSize: '40px' }}>F</b>YP
-          <b style={{ color: '#109272', fontSize: '40px' }}>L</b>AND
-          </div>
-        <div className="search_box">
-          <input type="search" placeholder="Search here" />
+         <input type="checkbox" id="check" />
+         <nav>
+      <div className="icon">
+      <b style={{ color: '#109272', fontSize: '40px' }}>F</b>YP
+      <b style={{ color: '#109272', fontSize: '40px' }}>L</b>AND
+      </div>
+      <div className="search_box">
+      <input type="search" placeholder="Search here" />
           <span className="fa fa-search"/>
-        </div>
-
+          </div>
+          
         <ol>
-          <li><NavLink to="/">Add property</NavLink></li>
-          <li><NavLink to="/marketplace">Market Place</NavLink></li>
-          <li><NavLink to="/signup">Sell Tokens</NavLink></li>
-          <li><NavLink to="/login">Login/Signup</NavLink></li>
-        </ol>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/login">Add property</NavLink></li>
+        <li><NavLink to="/marketplace">Market Place</NavLink></li>
+        <li><NavLink to="/login">Login/Signup</NavLink></li>
+            </ol>
         <label htmlFor="check" className="bar">
           <span className="fa fa-bars" id="bars" />
           <span className="fa fa-times" id="times" />
         </label>
-      </nav>
-    </div>
+        </nav>
+      </div>
   )
 }
 

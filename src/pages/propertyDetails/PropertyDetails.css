@@ -6,10 +6,14 @@
     width: 50%;
     border-radius: 20px;
     margin: 20px auto;
+    box-shadow: 10px 3px 38px 0px rgba(0,0,0,0.3);
 }
 .total-investments span{
     font-size: large;
     font-weight: bold;
+}
+.total-investments span input{
+    width: 20%;
 }
 .buyTokensBtn{
     background-color: var(--btnColor);

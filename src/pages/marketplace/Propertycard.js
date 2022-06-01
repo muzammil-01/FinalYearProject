@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import image from '../../assets/bed.jpg'
 function Propertycard() {
-  return (
-    <div>
-           <div className='market-card'>
+    return (
+        <div>
+            <div className='market-card'>
                 <div className='content'>
                     <div className='image'>
                         <img src={image} alt="" />
@@ -61,12 +62,12 @@ function Propertycard() {
                                 </div>
                             </div>
                         </div>
-                        <button className='view'>View Property</button>
+                        <Link to="/propertydetails/highlights" className='view'>View Property</Link>
                     </div>
                 </div>
             </div>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default Propertycard

@@ -1,0 +1,15 @@
+.user-details{
+    color: white;
+    background-color: var(--secondaryColor);
+    padding: 20px;
+    margin:20px;
+    box-shadow: 10px 3px 38px 0px rgba(0,0,0,0.3);
+    border-radius: 10px ;
+}
+.listings h2{
+    color: white;
+    text-align: center;
+}
+.listing-card{
+    text-align: center;
+}

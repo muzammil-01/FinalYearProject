@@ -13,14 +13,12 @@ function PropertyDetails() {
             <h2 style={{color:"white", textAlign: "center", marginTop:"30px"}}>TOTAL INVESTMENT: $ 714,402.00</h2>
             <div className="total-investments">
                 <p>
-                    <div>
-
                     <span>TOKEN STOCK : 8980 </span>
                     <span style={{marginLeft: "100px"}}>MAXIMUM TOKEN : 2130</span>
-                    </div>
-                    <br />
+                    <br/>  
+                    <br/>
                     <span>Select Tokens : </span>
-                    <span>No. of Tokens </span> x
+                    <span><input type="number"/> </span> x
                     <span> Price of 1 Token </span> =
                     <span> Total Price</span>
                 </p>
@@ -30,9 +28,9 @@ function PropertyDetails() {
             <div className="about-map">
 
                 <div className='about-property'>
-                    <p>
                         <h2>About the Property</h2>
                         <h5>19750 Marx</h5>
+                    <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos delectus praesentium dolorem ipsam optio natus veritatis eligendi sint velit aliquid, facilis cum repellat possimus eaque vitae molestiae quibusdam odio libero! <br />
                         Perspiciatis quia, fugiat architecto ad unde consectetur, quo culpa ipsum a libero facilis debitis maiores commodi veniam in beatae adipisci neque perferendis saepe? Necessitatibus minus eos fugit saepe, sed unde.
                     </p>

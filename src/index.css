@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+a{
+  text-decoration: none;
+}
 :root {
   --primaryColor:  #122333;
   --secondaryColor: #182b3c;
