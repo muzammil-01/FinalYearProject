@@ -15,9 +15,8 @@ import Profile from './pages/profile/Profile';
 function App() {
   return (
     <div className="App">
-
       <BrowserRouter>
-        <Routes>
+          <Routes>
           <Route path='/' element={<Home />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />

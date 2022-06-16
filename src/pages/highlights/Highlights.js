@@ -65,10 +65,6 @@ function Highlights() {
             <h5>Rented</h5>
             <span className='gapleft'>Fully Rented</span>
           </p>
-          <p>
-            <h5>Section 8</h5>
-            <span className='gapleft'>No</span>
-          </p>
         </div>
       </div>
     </>

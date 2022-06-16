@@ -4,9 +4,6 @@ import React from 'react'
 import {useLocation} from 'react-router-dom'
 
 const Navbar = () => {
-  const location = useLocation();
-  const path = location.pathname
-  console.log(path)
   return (
     <div>
          <input type="checkbox" id="check" />

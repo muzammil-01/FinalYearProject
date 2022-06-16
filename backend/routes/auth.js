@@ -9,16 +9,16 @@ var jwt = require('jsonwebtoken')
 const JWT_SECRET = "Mynameismuzammil"
 
 // create user using route '/api/auth/createuser' no Auth required
-router.post('/createuser', [
+router.post('/register', [
     body('name', "enter a valid name").isLength({ min: 3 }),
     body('email', "enter a valid email").isEmail(),
     body('password', "password must be atleast 5 characters").isLength({ min: 5 }),
-    body('phone', "enter a valid phone number").isLength({ min: 11 }),
 ], async (req, res) => {
+    let success = false;
     // if there are errors return bad request and errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
     // check whether the user with this email already exist 
     try {
@@ -26,7 +26,7 @@ router.post('/createuser', [
 
         let user = await User.findOne({ email: req.body.email });
         if (user) {
-            return res.status(400).json({ error: "Sorry a user with this email already exists" })
+            return res.status(400).json({success, error: "Sorry a user with this email already exists" })
         }
         const salt = await bcrypt.genSalt(10)
         secPass = await bcrypt.hash(req.body.password, salt)
@@ -34,7 +34,6 @@ router.post('/createuser', [
             name: req.body.name,
             email: req.body.email,
             password: secPass,
-            phone: req.body.phone
 
         })
         const data = {
@@ -43,7 +42,9 @@ router.post('/createuser', [
             }
         }
         const authToken = jwt.sign(data, JWT_SECRET)
-        res.json({ authToken })
+        success = true
+
+        res.json({success,authToken })
     } catch (error) {
         console.error(error.message)
         res.status(500).send("internal server error")
@@ -57,6 +58,7 @@ router.post('/login', [
     body('email', "enter a valid email").isEmail(),
     body('password', "password can not be empty").exists()
 ], async (req, res) => {
+    let success = false;
     // if there are errors return bad request and errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -68,11 +70,13 @@ router.post('/login', [
         const { email, password } = req.body;
         let user = await User.findOne({ email })
         if (!user) {
+            success = false;
             return res.status(400).json({ error: "please login with valid credentials" })
         }
         let comparePassword = await bcrypt.compare(password, user.password)
         if (!comparePassword) {
-            return res.status(400).json({ error: "please login with valid credentials" })
+            success = false;
+            return res.status(400).json({ success,error: "please login with valid credentials" })
         }
         const data = {
             user: {
@@ -80,7 +84,8 @@ router.post('/login', [
             }
         }
         const authToken = jwt.sign(data, JWT_SECRET)
-        res.json({ authToken })
+        success = true;
+        res.json({success, authToken })
     } catch (error) {
         console.error(error.message)
         res.status(500).send("internal server error")
