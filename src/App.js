@@ -11,6 +11,7 @@ import Bid from './pages/bid/Bid';
 import TokensForSale from './pages/tokenforsale/TokensForSale';
 import Financials from './pages/financials/Financials';
 import Profile from './pages/profile/Profile';
+import AddProperty from './pages/addPropertyForm/AddProperty'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
+          <Route path='addproperty' element={<AddProperty />} />
           <Route path="marketplace" element={<Marketplace />} />
           <Route path="propertydetails" element={<PropertyDetails />}>
           <Route path='highlights' element={<Highlights />} />

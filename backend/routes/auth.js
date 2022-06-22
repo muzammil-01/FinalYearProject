@@ -1,82 +1,68 @@
 const express = require('express')
 const User = require('../models/User')
 const router = express.Router()
-const { body, validationResult } = require('express-validator');
+const multer = require('multer')
 const bcrypt = require('bcryptjs')
 const fetchuser = require('../middleware/fetchuser')
 var jwt = require('jsonwebtoken')
 
 const JWT_SECRET = "Mynameismuzammil"
 
+
+
 // create user using route '/api/auth/createuser' no Auth required
-router.post('/register', [
-    body('name', "enter a valid name").isLength({ min: 3 }),
-    body('email', "enter a valid email").isEmail(),
-    body('password', "password must be atleast 5 characters").isLength({ min: 5 }),
-], async (req, res) => {
-    let success = false;
-    // if there are errors return bad request and errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ success, errors: errors.array() });
+router.post('/register' ,async (req, res) => {
+    const { name, email, password} = req.body
+    const userExists = await User.findOne({ email })
+
+    if (userExists) {
+        return res.status(400).send("Email already exists");
     }
-    // check whether the user with this email already exist 
-    try {
-
-
-        let user = await User.findOne({ email: req.body.email });
-        if (user) {
-            return res.status(400).json({success, error: "Sorry a user with this email already exists" })
+    const salt = await bcrypt.genSalt(10)
+    secPass = await bcrypt.hash(password, salt)
+    const user = await User.create({
+        name,
+        email,
+        password: secPass,
+    })
+    const data = {
+        user: {
+            id: user.id
         }
-        const salt = await bcrypt.genSalt(10)
-        secPass = await bcrypt.hash(req.body.password, salt)
-        user = await User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: secPass,
+    }
+    const authToken = jwt.sign(data, JWT_SECRET)
 
+
+    if (user) {
+        res.status(201).json({
+            name: user.name,
+            email: user.email,
+            id:user.id,
+            authToken
         })
-        const data = {
-            user: {
-                id: user.id
-            }
-        }
-        const authToken = jwt.sign(data, JWT_SECRET)
-        success = true
-
-        res.json({success,authToken })
-    } catch (error) {
-        console.error(error.message)
-        res.status(500).send("internal server error")
+    }
+    else {
+        res.status(400)
+        throw new Error('invalid user data')
     }
 })
 
 
 
 // Login user using route '/api/auth/login' no Auth required
-router.post('/login', [
-    body('email', "enter a valid email").isEmail(),
-    body('password', "password can not be empty").exists()
-], async (req, res) => {
-    let success = false;
-    // if there are errors return bad request and errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+router.post('/login', async (req, res) => {
+
     try {
 
 
         const { email, password } = req.body;
         let user = await User.findOne({ email })
         if (!user) {
-            success = false;
-            return res.status(400).json({ error: "please login with valid credentials" })
+            return res.status(400).send("invalid email")
         }
         let comparePassword = await bcrypt.compare(password, user.password)
         if (!comparePassword) {
-            success = false;
-            return res.status(400).json({ success,error: "please login with valid credentials" })
+            return res.status(400).send("invalid password")
         }
         const data = {
             user: {
@@ -84,8 +70,12 @@ router.post('/login', [
             }
         }
         const authToken = jwt.sign(data, JWT_SECRET)
-        success = true;
-        res.json({success, authToken })
+        res.json({
+            name: user.name,
+            email: user.email,
+            id:user.id,
+            authToken
+        })
     } catch (error) {
         console.error(error.message)
         res.status(500).send("internal server error")

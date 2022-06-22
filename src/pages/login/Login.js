@@ -1,56 +1,63 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../../Redux/actions/userActions'
 import './Login.css'
+import Spinner from '../../components/spinner/Spinner'
 
 function Login() {
   const navigate = useNavigate()
-  const [user, setUser] = useState({
-    email: "",
-    password: ""
-  })
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setUser({
-      ...user,
-      [name]: value
-    })
-  }
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
-    const {email, password} = user
-    if(email && password){
-    const response = await fetch("http://localhost:3001/api/auth/login",{
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password})
-    });
-    const json = await response.json()
-    console.log(json)
-    if(json.success){
-      localStorage.setItem('token', json.authToken);
+  const dispatch = useDispatch()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const userLogin = useSelector(state => state.userLogin)
+  const { loading, error, userInfo } = userLogin
+
+
+  useEffect(() => {
+    if (userInfo) {
       navigate("/")
     }
-    else{
-      alert("invalid email or password")
-    }
+  }, [navigate, userInfo])
+
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(login(email, password))
   }
-  else{
-    alert('invalid Email or password')
-  }
-  }
+
   return (
     <>
+      {loading && <Spinner />}
       <div className='login-card'>
-        <form className="form" onSubmit={handleSubmit} >
+        <form className="form" onSubmit={submitHandler} >
           <div className="top">
             <h1 style={{ color: "white" }}>Login</h1>
           </div>
           <br />
-          <input type="text" name="email" value={user.email} className="inputs" placeholder="Email Address" onChange={handleChange} />
-          <input type="password" name="password" value={user.password} className="inputs" placeholder="Password" onChange={handleChange} />
+          <input
+            type="text"
+            name="email"
+            value={email}
+            className="inputs"
+            placeholder="Email Address"
+            required
+            onChange={(e) => setEmail(e.target.value)} />
+
+
+          <input
+            type="password"
+            name="password"
+            value={password}
+            className="inputs"
+            placeholder="Password"
+            required
+            onChange={(e) => setPassword(e.target.value)} />
+            {error && <div className="error">{error}</div>}
+
           <br />
           <button className='logbtn'>Login</button>
           <br />
