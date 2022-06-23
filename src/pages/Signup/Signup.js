@@ -25,8 +25,34 @@ function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [image, setImage] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
+  const [uploading, setUploading] = useState(false)
+
+  const uploadFileHandler = async (e) => {
+    e.preventDefault()
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post('http://localhost:3001/api/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
 
 
   const submitHandler = (e) => {
@@ -36,7 +62,7 @@ function Signup() {
       setMessage('Passwords do not match')
     }
     else {
-      dispatch(register(name, email, password))
+      dispatch(register(name, email, password, image))
     }
   }
   return (
@@ -71,7 +97,7 @@ function Signup() {
           <input
             type="Password"
             className="inputs"
-            name="password" 
+            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
@@ -87,13 +113,21 @@ function Signup() {
             placeholder="Confirm Password"
             required minLength={5} />
 
-            {/* <label htmlFor="file">Choose profile picture</label>
-            <input 
-            name="profileImage"
-            type="file"
-            onChange={uploadFileHandler}
-            /> */}
+          <input
+            type='text'
+            placeholder='Enter image url'
+            value={image}
+            className="inputs"
+            onChange={(e) => setImage(e.target.value)}
+          />
 
+          <input
+          type='file'
+          id='image-file'
+          label='Choose File'
+          onChange={uploadFileHandler}
+          />
+          {uploading && <Spinner/>}
 
           {message && <div className='error'>{message}</div>}
           <button className='submitbtn'>Submit</button>

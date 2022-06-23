@@ -1,7 +1,7 @@
+
 const express = require('express')
 const User = require('../models/User')
 const router = express.Router()
-const multer = require('multer')
 const bcrypt = require('bcryptjs')
 const fetchuser = require('../middleware/fetchuser')
 var jwt = require('jsonwebtoken')
@@ -12,7 +12,7 @@ const JWT_SECRET = "Mynameismuzammil"
 
 // create user using route '/api/auth/createuser' no Auth required
 router.post('/register' ,async (req, res) => {
-    const { name, email, password} = req.body
+    const { name, email, password, image} = req.body
     const userExists = await User.findOne({ email })
 
     if (userExists) {
@@ -24,6 +24,7 @@ router.post('/register' ,async (req, res) => {
         name,
         email,
         password: secPass,
+        image
     })
     const data = {
         user: {
@@ -38,6 +39,7 @@ router.post('/register' ,async (req, res) => {
             name: user.name,
             email: user.email,
             id:user.id,
+            image,
             authToken
         })
     }
@@ -53,10 +55,8 @@ router.post('/register' ,async (req, res) => {
 router.post('/login', async (req, res) => {
 
     try {
-
-
         const { email, password } = req.body;
-        let user = await User.findOne({ email })
+        let user = await User.findOne({ email})
         if (!user) {
             return res.status(400).send("invalid email")
         }
@@ -74,6 +74,7 @@ router.post('/login', async (req, res) => {
             name: user.name,
             email: user.email,
             id:user.id,
+            image:user.image,
             authToken
         })
     } catch (error) {
@@ -85,10 +86,9 @@ router.post('/login', async (req, res) => {
 
 
 // getuser details using route '/api/auth/getuser' Auth required
-router.post('/getuser', fetchuser, async (req, res) => {
+router.get('/getuser', fetchuser, async (req, res) => {
     try {
-        userId = req.user.id
-        const user = await User.findById(userId).select("-password")
+        const user = await User.findById(req.user.id).select("-password")
         res.send(user)
     } catch (error) {
         console.error(error.message)

@@ -12,7 +12,9 @@ function Profile() {
                 <h4>Name: {userInfo.name}</h4>
                 <h4>ID: {userInfo.id}</h4>
                 <h4>Email: {userInfo.email}</h4>
-                <img src={userInfo.profileImage} alt="...." />
+                <img src={`http://localhost:3001/public/images/${userInfo.image}`} alt="..." />
+                {console.log(userInfo.image)}
+                
             </div>
             <div className="yourListings">
                 <h1>Your Properties</h1>
