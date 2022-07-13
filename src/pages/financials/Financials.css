@@ -3,6 +3,9 @@
     justify-content: center;
     grid-gap: 100px;
 }
+.gapleft{
+    float: right;
+}
 .financial-heading{
     background-color: var(--secondaryColor);
     box-shadow: 10px 3px 38px 0px rgba(0,0,0,0.3);
@@ -23,6 +26,9 @@
     width: 80%;
     margin:0 auto;
 }
-.financial-details p {
+.financial-details h2 {
     border-bottom: 1px solid white;
+}
+.financial-details >h2 >span{
+    font-size: 20px;
 }

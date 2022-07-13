@@ -13,14 +13,14 @@ function AddProperty() {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
     const propertyAdd = useSelector(state => state.propertyAdd)
-    const { loading, error, propertyData } = propertyAdd
+    const { loading, error} = propertyAdd
 
-    // useEffect(() => {
-    //     if (!userInfo) {
-    //         alert("please Login first")
-    //         navigate('/login')
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (!userInfo) {
+            alert("please Login first")
+            navigate('/login')
+        }
+    }, [])
 
 
     const [property, setProperty] = useState({
@@ -50,6 +50,9 @@ function AddProperty() {
     }
     return (
         <>
+
+            {error && <div className='error'>{error}</div>}
+            {loading && <Spinner />}
             <div className='login-card'>
                 {loading && <Spinner/>}
                 {error && <div className='error'>{error}</div>}

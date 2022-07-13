@@ -4,6 +4,10 @@ const { Schema } = mongoose
 
 const PropertyDetailsSchema = new Schema({
 
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
     propertyName: {
         type: String,
         required: true,

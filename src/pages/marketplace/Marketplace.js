@@ -1,17 +1,32 @@
-import React from 'react'
+import React , {useEffect} from 'react'
 import Footer from '../../components/Footer/Footer'
 import Navbar from '../../components/Navbar/Navbar'
 import './Marketplace.css'
 import Propertycard from './Propertycard'
+import { useDispatch, useSelector } from 'react-redux'
+import {getAllProperties} from '../../Redux/actions/propertyActions'
+import Spinner from '../../components/spinner/Spinner'
 
-function Marketplace() {
+
+const Marketplace = ()=> {
+
+
+    const dispatch = useDispatch()
+  
+    const listAll = useSelector(state => state.listAll)
+    const { loading, error, propertyData} = listAll
+    useEffect(() => {
+      dispatch(getAllProperties())  
+    }, [])
     return (
         <>
-            <Navbar />
-            <Propertycard />
-            <Propertycard />
-            <Propertycard />
-            <Propertycard />
+        <Navbar />
+        {loading && <Spinner/>}
+        {propertyData && propertyData.map((property)=> (
+            <Propertycard key={property._id} property={property}/>
+        )
+
+        )}
             <Footer />
         </>
     )

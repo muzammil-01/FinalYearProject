@@ -8,13 +8,17 @@ import {
 } from './reducers/userReducers'
 
 import {
-    addPropertyReducer
+    addPropertyReducer,
+    allPropertiesReducer,
+    propertyDetailsReducer
 } from './reducers/propertyReducers'
 
 const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userLogin: userLoginReducer,
-    propertyAdd: addPropertyReducer
+    propertyAdd: addPropertyReducer,
+    listAll: allPropertiesReducer,
+    propertyDetails: propertyDetailsReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

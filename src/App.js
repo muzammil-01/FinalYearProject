@@ -5,7 +5,6 @@ import Login from './pages/login/Login';
 import Marketplace from './pages/marketplace/Marketplace';
 import PropertyDetails from './pages/propertyDetails/PropertyDetails';
 import Signup from './pages/Signup/Signup';
-import Highlights from './pages/highlights/Highlights';
 import Details from './pages/details/Details';
 import Bid from './pages/bid/Bid';
 import TokensForSale from './pages/tokenforsale/TokensForSale';
@@ -23,8 +22,7 @@ function App() {
           <Route path='signup' element={<Signup />} />
           <Route path='addproperty' element={<AddProperty />} />
           <Route path="marketplace" element={<Marketplace />} />
-          <Route path="propertydetails" element={<PropertyDetails />}>
-          <Route path='highlights' element={<Highlights />} />
+          <Route path="propertydetails/:id" element={<PropertyDetails />}>
           <Route path='financials' element={<Financials />} />
           <Route path='details' element={<Details />} />
           <Route path="bid" element={<Bid />} />

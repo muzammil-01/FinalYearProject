@@ -1,25 +1,13 @@
 const express = require('express')
 const Property = require ('../models/Property')
 const { body, validationResult } = require('express-validator');
+const fetchuser = require('../middleware/fetchuser');
 const router = express.Router()
 
-/*
-{
-    "propertyName": "white house",
-    "propertyLocation": "malir saudabad",
-    "beds": "2",
-    "baths": "3",
-    "size": "500 sqft",
-    "country": "pakistan",
-    "city": "karachi",
-    "postalcode": "75100",
-    "atreetAddress": "model colony sheet # 26"
-}
-*/ 
 
 
-// adding property using route '/api/property/addproperty' Auth required
-router.post('/addproperty', [
+// add property using route '/api/property/addproperty' Auth required
+router.post('/addproperty', fetchuser, [
     body('propertyName').isLength({ min: 3 }),
     body('propertyLocation').isLength({ min: 3 }),
     body('beds').isLength({ min: 1 }),
@@ -45,7 +33,8 @@ router.post('/addproperty', [
             country: req.body.country,
             city: req.body.city,
             postalcode: req.body.postalcode,
-            streetAddress: req.body.streetAddress
+            streetAddress: req.body.streetAddress,
+            user: req.user.id
         })
         res.json({ addProperty })
     } catch (error) {
@@ -53,4 +42,29 @@ router.post('/addproperty', [
         res.status(500).send("internal server error")
     }
 }) 
+
+// fetch all properties GET /api/property/allproperties
+router.get("/allproperties", async(req,res)=>{
+const properties =await Property.find({property:req.body._id})
+res.json(properties)
+})
+
+// fetch all properties by id GET /api/property/:id
+router.get("/:id", async(req, res)=>{
+    const property = await Property.findById(req.params.id)
+    if(property){
+        res.json(property)
+    }else{
+        res.status(404)
+        res.json('Product not found')
+    }
+})
+
+
+
+// fetch all user specific properties GET /api/property/userproperties
+router.get('/userproperties', fetchuser, async(req,res)=>{
+    const use = await Property.find({user:req.user.id})
+    res.json(use)
+})
 module.exports = router
