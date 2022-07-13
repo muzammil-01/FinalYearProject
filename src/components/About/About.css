@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
+
 .about h1{
-    color: white;
+    color: var(--btnColor);
     text-align: center;
     font-weight: 900;
-    margin-top: 70px;
+    margin-bottom: 30px;
     font-family:'Merriweather', serif;
 }
 .carded{

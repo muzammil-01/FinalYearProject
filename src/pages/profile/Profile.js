@@ -12,7 +12,7 @@ function Profile() {
                 <h4>Name: {userInfo.name}</h4>
                 <h4>ID: {userInfo.id}</h4>
                 <h4>Email: {userInfo.email}</h4>
-                <img src={`http://localhost:3001/public/images/${userInfo.image}`} alt="..." />
+                <img src={`https://realestateblockchainweb3.herokuapp.com/public/images/${userInfo.image}`} alt="..." />
                 {console.log(userInfo.image)}
                 
             </div>

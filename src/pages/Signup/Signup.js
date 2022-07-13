@@ -44,7 +44,7 @@ function Signup() {
         },
       }
 
-      const { data } = await axios.post('http://localhost:3001/api/upload', formData, config)
+      const { data } = await axios.post('https://realestateblockchainweb3.herokuapp.com/api/upload', formData, config)
 
       setImage(data)
       setUploading(false)

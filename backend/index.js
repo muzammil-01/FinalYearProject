@@ -18,6 +18,10 @@ app.use('/api/upload',  require('./routes/uploadRoutes'))
 
 app.use("/public", express.static('public'))
 
+app.get("/",(req,res)=>{
+    res.json("server start")
+})
+
 app.listen(PORT , ()=>{
     console.log(`app listening at http://localhost:${PORT}`)
 })

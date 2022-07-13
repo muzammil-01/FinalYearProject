@@ -30,13 +30,13 @@ nav > ol > li > a {
   padding: 5px 10px;
 }
 nav > ol > li > a.active {
-  background-color: var(--btnColor);
+  /* background-color: var(--btnColor); */
+  background-color: #109272;
   border-radius: 20px;
 }
 nav > ol > li:hover > a {
   color: #fff;
-  background-color: var(--btnColor);
-  box-shadow: 0.1px 0.1px 10px 0px #42d386e8;
+  background-color:#109272;
   border-radius: 20px;
 }
 .logoutBtn{
@@ -127,19 +127,24 @@ input[type="checkbox"] {
     display: flex;
     flex-direction: column;
     height: 0;
+    width: 100%;
     visibility: hidden;
     transition: 0.3s;
+  
   }
   nav ol li {
     text-align: center;
     transition: 0.3s 0.1s all;
     opacity: 0;
+    padding: 10px;
+    width: 100%;
+    
   }
   nav ol li a {
     color: #fff;
-    font-size: 28px;
-    padding: 20px;
+    font-size: 20px;
     display: block;
+    margin-right: 30px;
   }
   nav ol li:nth-child(1) {
     transform: translateX(-150px);
@@ -174,7 +179,7 @@ input[type="checkbox"] {
   }
   #check:checked ~ nav ol {
     visibility: visible;
-    height: 465px;
+    height: 350px;
   }
   #check:checked ~ nav ol li:nth-child(1),
   #check:checked ~ nav ol li:nth-child(2),
@@ -200,6 +205,7 @@ input[type="checkbox"] {
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-right: 30px;
 }
 
 .dropdown-content {
@@ -207,13 +213,13 @@ input[type="checkbox"] {
   position: absolute;
   background-color: var(--primaryColor);
   top: 30px;
-  min-width: 100%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
 .dropdown-content a {
   color: #fff;
+  min-width: 100%;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
