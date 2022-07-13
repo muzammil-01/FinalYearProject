@@ -6,8 +6,4 @@ Creating a blockchain web 3 Fractional And Frictionless RealEstate Website. User
 Front End Using ReactJS
 Backend Using NodeJs
 Databases Mongodb and IPFS
-<<<<<<< HEAD
 Solidity for smart contract
-=======
-Solidity for smart contract
->>>>>>> 172cf6655dd8a2dab0c48eebe543e55359d21f2c
