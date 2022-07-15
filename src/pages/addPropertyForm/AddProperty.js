@@ -53,12 +53,12 @@ function AddProperty() {
 
             {error && <div className='error'>{error}</div>}
             {loading && <Spinner />}
-            <div className='login-card'>
+            <div>
                 {loading && <Spinner/>}
                 {error && <div className='error'>{error}</div>}
-                <form className="form" onSubmit={submitHandler} >
-                    <div className="top">
-                        <h1 style={{ color: "white" }}>Add Property</h1>
+                <form className="property-form" onSubmit={submitHandler} >
+                    <div className="top-heading">
+                        <h1>Add Property</h1>
                     </div>
                     <br />
                     <input

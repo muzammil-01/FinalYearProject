@@ -29,6 +29,8 @@ function Login() {
     dispatch(login(email, password))
   }
 
+
+  
   return (
     <>
       {loading && <Spinner />}
@@ -56,7 +58,9 @@ function Login() {
             placeholder="Password"
             required
             onChange={(e) => setPassword(e.target.value)} />
-            {error && <div className="error">{error}</div>}
+          
+      {error && <div className="error">{error}</div>}
+
 
           <br />
           <button className='logbtn'>Login</button>

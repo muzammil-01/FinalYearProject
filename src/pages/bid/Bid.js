@@ -6,6 +6,8 @@ import image from '../../assets/bed.jpg'
 
 function Bid() {
   return (
+    <>
+    <h3 className='bidding-date' id='bid-date1'>Bidding Will End at : Thursday, 31 March 2022  1:22 am</h3>
     <div className='bid'>
       <div className="highest-bidder-card">
       <h5>Current Highest Bidder</h5>
@@ -16,7 +18,7 @@ function Bid() {
       <p className='bidding-price'>Bidding Price $ 50,000</p>
       </div>
       <div className="bidding-form-complete">
-        <h3>Bidding Will End at : Thursday, 31 March 2022  1:22 am</h3>
+        <h3 className='bidding-date' id='bid-date2'>Bidding Will End at : Thursday, 31 March 2022  1:22 am</h3>
         <div className="bidding-form">
           <div className='house-image'>
           <img src={image}/>
@@ -49,6 +51,7 @@ function Bid() {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

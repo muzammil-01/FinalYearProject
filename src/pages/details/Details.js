@@ -1,6 +1,5 @@
 import React from 'react'
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
-import map from '../../assets/map.jpg'
 import './Details.css'
 import { useSelector } from 'react-redux'
 
@@ -64,20 +63,6 @@ function Details() {
           </h2>
     </div>
     </div>
-    <div className="about-map">
-
-<div className='about-property'>
-    <h2>About the Property</h2>
-    <h5>19750 Marx</h5>
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos delectus praesentium dolorem ipsam optio natus veritatis eligendi sint velit aliquid, facilis cum repellat possimus eaque vitae molestiae quibusdam odio libero! <br />
-        Perspiciatis quia, fugiat architecto ad unde consectetur, quo culpa ipsum a libero facilis debitis maiores commodi veniam in beatae adipisci neque perferendis saepe? Necessitatibus minus eos fugit saepe, sed unde.
-    </p>
-</div>
-<div className="map">
-    <img src={map} alt="" />
-</div>
-</div>
     </>
   )
 }

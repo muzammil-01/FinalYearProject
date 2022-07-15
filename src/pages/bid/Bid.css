@@ -16,6 +16,9 @@
   border-radius: 20px;
   box-shadow: 10px 3px 38px 0px rgba(0, 0, 0, 0.3);
 }
+#bid-date1{
+  display: none;
+}
 .highest-bidder-card h5{
     color: var(--btnColor);
 }
@@ -30,13 +33,15 @@
   padding: 10px;
   border-radius: 6px;
 }
-.bidding-form-complete h3 {
+.bidding-date {
+  color: white;
+  width: fit-content;
+  margin: 10px auto;
   text-align: center;
   border-radius: 20px;
   background-color: var(--secondaryColor);
   box-shadow: 10px 3px 38px 0px rgba(0, 0, 0, 0.3);
   padding: 10px;
-  margin: 0px 0px 30px 0px;
 }
 .bidding-form {
   background-color: var(--secondaryColor);
@@ -76,4 +81,31 @@
     margin: 30px 10px 0px 10px;
     padding: 7px;
     border-radius: 6px;
+}
+
+@media screen and (max-width:1200px){
+  .bid, .bidding-form{
+    display: block;
+  }
+  #bid-date1{
+    display:block;
+  }
+  #bid-date2{
+    display: none;
+  }
+  .highest-bidder-card{
+    width: 80%;
+    margin: 15px auto;
+  }
+  .house-image img{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .bidding-form-complete{
+    width: 80%;
+    margin: 0 auto;
+  }
+  .form-fields input{
+width: 100%;
+  }
 }

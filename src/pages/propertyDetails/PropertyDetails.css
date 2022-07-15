@@ -36,10 +36,9 @@
 }
 .about-map{
     display: grid;
-    grid-template-columns: 4rem 30rem 31.5rem 4rem;
-    grid-gap: 80px;
-    text-align: center;
-    margin:10px 0px 10px 0px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 25px;
+    padding: 50px;
 }
 .map img{
     width: 100%;
@@ -51,4 +50,13 @@
 .map h2 {
     color: white;
     text-align: center;
+}
+@media screen and (max-width:1200px){
+    .about-map{
+        display: block;
+        padding: 10px;
+    }
+    .map{
+        margin-top: 10px;
+    }
 }

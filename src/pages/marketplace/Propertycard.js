@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import image from '../../assets/bed.jpg'
-function Propertycard({property}) {
+function Propertycard({ property }) {
     console.log(property.propertyName)
     return (
         <div>
@@ -14,13 +14,13 @@ function Propertycard({property}) {
                         <div className='pricing'>
                             <div className='total-price'>
                                 <p>
-                                    <span style={{ color: "white", fontSize: "20px" }}>
-                                      {property.propertyName}
+                                    <span style={{ fontSize: "20px",color: "#109272",  fontWeight:"bold", textTransform:"uppercase"}}>
+                                        {property.propertyName}
                                     </span>
                                     <br />
                                     $ 714,402
                                     <br />
-                                    <span style={{ color: "white", fontSize: "20px" }}>
+                                    <span style={{ color: "#109272",  fontWeight:"bold",fontSize: "20px" }}>
                                         TOTAL TOKENS
                                     </span>
                                     <br />
@@ -29,13 +29,13 @@ function Propertycard({property}) {
                             </div>
                             <div className="token-price">
                                 <p>
-                                    <span style={{ color: "white", fontSize: "20px" }}>
+                                    <span style={{ color: "#109272",  fontWeight:"bold", fontSize: "20px" }}>
                                         TOKEN's PRICE
                                     </span>
                                     <br />
                                     $ 50.31
                                     <br />
-                                    <span style={{ color: "#fff", fontSize: "20px" }}>
+                                    <span style={{ color: "#109272",  fontWeight:"bold", fontSize: "20px" }}>
                                         Available TOKEN's
                                     </span>
                                     <br />
@@ -45,7 +45,7 @@ function Propertycard({property}) {
                             <div className="up">
                                 <div className="expected-income">
                                     <p>
-                                        <span style={{ color: "#fff", fontSize: "20px" }}>
+                                        <span style={{ color: "#109272",  fontWeight:"bold", fontSize: "20px" }}>
                                             RENT PER TOKEN
                                         </span>
                                     </p>
@@ -57,7 +57,7 @@ function Propertycard({property}) {
                                 </div>
                             </div>
                         </div>
-                        <Link to={`/propertydetails/${property._id}`}className='view'>View Property</Link>
+                        <Link to={`/propertydetails/${property._id}`} className='view'>View Property</Link>
                     </div>
                 </div>
             </div>
