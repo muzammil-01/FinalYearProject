@@ -109,7 +109,9 @@ export const getUserSpecificProperties = () => async (dispatch) => {
 
 export const listPropertyDetails = (id) => async (dispatch) => {
   try {
-    dispatch({ type: PROPERTY_DETAILS_REQUEST })
+    dispatch({
+       type: PROPERTY_DETAILS_REQUEST 
+      })
 
     const { data } = await axios.get(`http://localhost:3001/api/property/${id}`)
     console.log(data)
@@ -119,10 +121,13 @@ export const listPropertyDetails = (id) => async (dispatch) => {
       payload: data
     })
   } catch (error) {
-    dispatch({
-      type: PROPERTY_DETAILS_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
-    })
+    console.error("hello world")
+    // dispatch({
+     
+    //   type: PROPERTY_DETAILS_FAIL,
+    //   payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+     
+    // })
   }
 }
 

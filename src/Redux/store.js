@@ -14,13 +14,18 @@ import {
     userSpecificPropertiesReducer
 } from './reducers/propertyReducers'
 
+import {
+    walletConnect
+} from './reducers/walletConnectReducer'
+
 const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userLogin: userLoginReducer,
     propertyAdd: addPropertyReducer,
     listAll: allPropertiesReducer,
     userSpecificProperties: userSpecificPropertiesReducer,
-    propertyDetails: propertyDetailsReducer
+    propertyDetails: propertyDetailsReducer,
+    wallet:walletConnect
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null

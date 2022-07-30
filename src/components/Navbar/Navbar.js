@@ -1,11 +1,14 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import './Navbar.css'
+import { ethers } from 'ethers'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../Redux/actions/userActions'
 import Logo from '../../assets/logo.png'
+import { useState } from 'react'
+import {connect,get_Signer} from '../../Redux/actions/connectWalletAction'
 
 
 const Navbar = () => {
@@ -13,17 +16,23 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+
   const logoutHandler = () => {
     dispatch(logout())
   }
+
+  const connectHandler = async (e) => {
+    e.preventDefault()
+    dispatch(connect())
+  }
+
+
   return (
     <div>
       <input type="checkbox" id="check" />
       <nav>
         <div className="icon">
           <img src={Logo} alt="logo" />
-          {/* <b style={{ color: '#109272', fontSize: '40px' }}>F</b>YP
-          <b style={{ color: '#109272', fontSize: '40px' }}>L</b>AND */}
         </div>
         <div className="search_box">
           <input type="search" placeholder="Search here" />
@@ -50,6 +59,7 @@ const Navbar = () => {
               <div className="dropdown-content">
                 <Link to="/" onClick={logoutHandler}>Logout</Link>
                 <Link to="/profile">Profile</Link>
+                <button onClick={connectHandler} className='connect-wallet'>connect wallet</button>
               </div>
             </div> :
               <NavLink to="/login">Login/Signup</NavLink>}
