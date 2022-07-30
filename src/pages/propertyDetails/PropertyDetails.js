@@ -15,7 +15,7 @@ function PropertyDetails() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(listPropertyDetails(id))
-    }, [])
+    }, [dispatch, id])
 
     return (
         <>

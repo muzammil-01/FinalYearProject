@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import image from '../../assets/bed.jpg'
 function Propertycard({ property }) {
-    console.log(property.propertyName)
     return (
         <div>
             <div className='market-card'>

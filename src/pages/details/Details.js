@@ -19,7 +19,7 @@ function Details() {
         <div className="property-details">
           <h2>
             <h5> Property name</h5>
-            <span className='gapleft'>{property.propertyName}</span>
+            {/* <span className='gapleft'>{property.propertyName}</span> */}
           </h2>
           <h2>
             <h5>Area</h5>

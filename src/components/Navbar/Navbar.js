@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../Redux/actions/userActions'
+import Logo from '../../assets/logo.png'
 
 
 const Navbar = () => {
@@ -20,8 +21,9 @@ const Navbar = () => {
       <input type="checkbox" id="check" />
       <nav>
         <div className="icon">
-          <b style={{ color: '#109272', fontSize: '40px' }}>F</b>YP
-          <b style={{ color: '#109272', fontSize: '40px' }}>L</b>AND
+          <img src={Logo} alt="logo" />
+          {/* <b style={{ color: '#109272', fontSize: '40px' }}>F</b>YP
+          <b style={{ color: '#109272', fontSize: '40px' }}>L</b>AND */}
         </div>
         <div className="search_box">
           <input type="search" placeholder="Search here" />

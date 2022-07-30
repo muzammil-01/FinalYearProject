@@ -10,7 +10,8 @@ import {
 import {
     addPropertyReducer,
     allPropertiesReducer,
-    propertyDetailsReducer
+    propertyDetailsReducer,
+    userSpecificPropertiesReducer
 } from './reducers/propertyReducers'
 
 const reducer = combineReducers({
@@ -18,6 +19,7 @@ const reducer = combineReducers({
     userLogin: userLoginReducer,
     propertyAdd: addPropertyReducer,
     listAll: allPropertiesReducer,
+    userSpecificProperties: userSpecificPropertiesReducer,
     propertyDetails: propertyDetailsReducer
 })
 

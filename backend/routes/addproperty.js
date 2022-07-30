@@ -49,6 +49,21 @@ const properties =await Property.find({property:req.body._id})
 res.json(properties)
 })
 
+
+
+
+// fetch all user specific properties GET /api/property/userproperties
+router.get("/userproperties", fetchuser, async(req,res)=>{
+    try {
+        const use = await Property.find({ user: req.user.id})
+        res.json(use)
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+    
+    
+})
 // fetch all properties by id GET /api/property/:id
 router.get("/:id", async(req, res)=>{
     const property = await Property.findById(req.params.id)
@@ -58,13 +73,5 @@ router.get("/:id", async(req, res)=>{
         res.status(404)
         res.json('Product not found')
     }
-})
-
-
-
-// fetch all user specific properties GET /api/property/userproperties
-router.get('/userproperties', fetchuser, async(req,res)=>{
-    const use = await Property.find({user:req.user.id})
-    res.json(use)
 })
 module.exports = router

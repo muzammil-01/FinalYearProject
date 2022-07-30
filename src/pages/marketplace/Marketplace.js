@@ -9,15 +9,14 @@ import Spinner from '../../components/spinner/Spinner'
 
 
 const Marketplace = () => {
-
-
     const dispatch = useDispatch()
 
-    const listAll = useSelector(state => state.listAll)
-    const { loading, error, propertyData } = listAll
     useEffect(() => {
         dispatch(getAllProperties())
-    }, [])
+    }, [dispatch])
+    
+    const listAll = useSelector(state => state.listAll)
+    const { loading, error, propertyData } = listAll
     return (
         <>
             <Navbar />

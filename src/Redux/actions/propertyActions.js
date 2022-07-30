@@ -8,6 +8,9 @@ import {
     PROPERTY_DETAILS_REQUEST,
     PROPERTY_DETAILS_SUCCESS,
     PROPERTY_DETAILS_FAIL,
+    LIST_USER_SPECIFIC_PROPERTY_REQUEST,
+    LIST_USER_SPECIFIC_PROPERTY_SUCCESS,
+    LIST_USER_SPECIFIC_PROPERTY_FAIL
 } from '../constants/propertyConstants'
 
 import axios from 'axios'
@@ -30,7 +33,7 @@ export const addProperty = (propertyName, propertyLocation, beds, baths, size, c
       }
     }
    
-    const  {data}  = await axios.post('https://realestateblockchainweb3.herokuapp.com/api/property/addproperty', {propertyName, propertyLocation, beds, baths, size, country, city, postalcode, streetAddress} ,
+    const  {data}  = await axios.post('http://localhost:3001/api/property/addproperty', {propertyName, propertyLocation, beds, baths, size, country, city, postalcode, streetAddress} ,
      config)
     console.log(data)
 
@@ -60,7 +63,7 @@ export const getAllProperties = () => async (dispatch) => {
         'Content-Type': 'application/json'
       }
     }
-    const {data} = await axios.get("https://realestateblockchainweb3.herokuapp.com/api/property/allproperties",config)
+    const {data} = await axios.get("http://localhost:3001/api/property/allproperties",config)
 
     dispatch({
       type: LIST_PROPERTY_SUCCESS,
@@ -75,11 +78,41 @@ export const getAllProperties = () => async (dispatch) => {
   }
 }
 
+
+// Get user specific properties
+export const getUserSpecificProperties = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: LIST_USER_SPECIFIC_PROPERTY_REQUEST
+    })
+   
+    const config = {
+      headers: {
+        "auth-token":token
+      }
+    }
+    const {data} = await axios.get("http://localhost:3001/api/property/userproperties",config)
+    console.log(data)
+
+    dispatch({
+      type: LIST_USER_SPECIFIC_PROPERTY_SUCCESS,
+      payload: data,
+    })
+
+  } catch (error) {
+    dispatch({
+      type: LIST_USER_SPECIFIC_PROPERTY_FAIL,
+      payload: error.response.data
+    })
+  }
+}
+
 export const listPropertyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PROPERTY_DETAILS_REQUEST })
 
-    const { data } = await axios.get(`https://realestateblockchainweb3.herokuapp.com/api/property/${id}`)
+    const { data } = await axios.get(`http://localhost:3001/api/property/${id}`)
+    console.log(data)
 
     dispatch({
       type: PROPERTY_DETAILS_SUCCESS,
@@ -92,3 +125,4 @@ export const listPropertyDetails = (id) => async (dispatch) => {
     })
   }
 }
+
