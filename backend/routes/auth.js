@@ -12,44 +12,41 @@ const JWT_SECRET = "Mynameismuzammil"
 
 // create user using route '/api/auth/createuser' no Auth required
 router.post('/register' ,async (req, res) => {
-    console.log(req.files.image[0].originalname)
-    // const { name, email, password} = req.body
-    // const userExists = await User.findOne({ email })
+    const { name, email, password, image} = req.body
+    const userExists = await User.findOne({ email })
+
+    if (userExists) {
+        return res.status(400).send("Email already exists");
+    }
+    const salt = await bcrypt.genSalt(10)
+    secPass = await bcrypt.hash(password, salt)
+    const user = await User.create({
+        name,
+        email,
+        password: secPass,
+        image
+    })
+    const data = {
+        user: {
+            id: user.id
+        }
+    }
+    const authToken = jwt.sign(data, JWT_SECRET)
 
 
-    // if (userExists) {
-    //     return res.status(400).send("Email already exists");
-    // }
-    // const salt = await bcrypt.genSalt(10)
-    // secPass = await bcrypt.hash(password, salt)
-    // const user = await User.create({
-    //     name,
-    //     email,
-    //     password: secPass,
-    //     image:req.file.image[0].originalName
-    // })
- 
-    // const data = {
-    //     user: {
-    //         id: user.id
-    //     }
-    // }
-    // const authToken = jwt.sign(data, JWT_SECRET)
-
-
-    // if (user) {
-    //     res.status(201).json({
-    //         name: user.name,
-    //         email: user.email,
-    //         id:user.id,
-    //         image,
-    //         authToken
-    //     })
-    // }
-    // else {
-    //     res.status(400)
-    //     throw new Error('invalid user data')
-    // }
+    if (user) {
+        res.status(201).json({
+            name: user.name,
+            email: user.email,
+            id:user.id,
+            image,
+            authToken
+        })
+    }
+    else {
+        res.status(400)
+        throw new Error('invalid user data')
+    }
 })
 
 

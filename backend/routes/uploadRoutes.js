@@ -13,16 +13,15 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage})
-const Arrayupload =  upload.fields([{name:"image",maxCount:1},{name:"documents",maxCount:2}]) 
+const imageArray = upload.fields([{name:"profileImage",maxCount:1},{name:"profileDoc",maxCount:1}])
 
-
-// router.post('/', upload.single('image'), (req, res) =>{
-//     res.send(`${req.file.originalname}`)
-// })
-
-router.post('/', Arrayupload , (req, res) =>{
-    res.send(req.files)
+router.post('/', imageArray , (req, res) =>{
+    try{
+        res.status(200).send("images have been saved successfuly")
+    }catch(e){
+        return res.send(e)
+    }
+    
 })
-
 
 module.exports = router

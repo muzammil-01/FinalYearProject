@@ -6,7 +6,7 @@ var cors = require('cors')
 connectToMongo();
 
 const app = express()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3001
 
 
 app.use(cors())
