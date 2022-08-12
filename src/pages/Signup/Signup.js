@@ -25,16 +25,32 @@ function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState([])
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
   const [uploading, setUploading] = useState(false)
 
+
+// useEffect((e) => {
+//   return () => {
+//    setImage(e.target.files)
+//   }
+// },[])
+ 
+
   const uploadFileHandler = async (e) => {
     e.preventDefault()
-    const file = e.target.files[0]
+  
+    const arr =[]
+    for(let i = 0;i<e.target.files.length;i++){
+        arr.push(e.target.files[i])
+      }
+      // setImage(arr)
+      console.log(image)
+   
     const formData = new FormData()
-    formData.append('image', file)
+    formData.append('image',image)
+
     setUploading(true)
 
     try {
@@ -43,17 +59,18 @@ function Signup() {
           'Content-Type': 'multipart/form-data',
         },
       }
-
+      
       const { data } = await axios.post('http://localhost:3001/api/upload', formData, config)
-
-      setImage(data)
+      
+      // setImage(data)
       setUploading(false)
     } catch (error) {
-      console.error(error)
+      console.error(error.message)
       setUploading(false)
     }
   }
 
+  
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -113,13 +130,13 @@ function Signup() {
             placeholder="Confirm Password"
             required minLength={5} />
 
-          <input
+          {/* <input
             type='text'
             placeholder='Enter image url'
             value={image}
             className="inputs"
-            onChange={(e) => setImage(e.target.value)}
-          />
+            onChange={(e) => setImage(e.target.files)}
+          /> */}
 
           <input
           type='file'

@@ -21,7 +21,7 @@ export const register = (name, email, password, image) => async (dispatch) => {
         'Content-Type': 'application/json'
       }
     }
-    const  {data}  = await axios.post('https://realestateblockchainweb3.herokuapp.com/api/auth/register', {name, email, password, image} ,
+    const  {data}  = await axios.post('http://localhost:3001/api/auth/register', {name, email, password, image} ,
      config)
     console.log(data)
 
@@ -55,7 +55,7 @@ export const login = (email, password) => async (dispatch) => {
         'Content-Type': 'application/json'
       }
     }
-    const  {data}  = await axios.post('https://realestateblockchainweb3.herokuapp.com/api/auth/login', { email, password },
+    const  {data}  = await axios.post('http://localhost:3001/api/auth/login', { email, password },
       config)
 
     dispatch({
