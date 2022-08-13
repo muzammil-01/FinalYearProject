@@ -8,11 +8,12 @@ Creating a blockchain web 3 Fractional And Frictionless RealEstate Website. User
 
 
 
-# Technologies used
-### Front End Using ReactJS
-### Backend Using NodeJs
-### Databases Mongodb and IPFS
-### Solidity for smart contract
+# Technologies used :-
+### -Front End Using ReactJS
+### -Backend Using NodeJs
+### -Databases Mongodb and IPFS
+### -Remix and Hardhat For testing smart contracts
+### -Solidity for smart contract
 
 
 # A fully Digital Real Estate Marketplace Powered By Blockchain And Web3.0
