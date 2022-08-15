@@ -1,4 +1,5 @@
 import React , {useEffect, useState}from 'react'
+import axios from 'axios'
 import Banner from '../../components/Banner/Banner'
 import About from '../../components/About/About'
 import Footer from "../../components/Footer/Footer";
@@ -7,15 +8,19 @@ import Spinner from '../../components/spinner/Spinner'
 
 function Home() {
   const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     setLoading(true)
     setTimeout(()=>{
     setLoading(false)
-
     }, 500)
+    
+    
+
   }, [])
   return (
     <div>
+      
       {loading ? 
       <Spinner/>
       :

@@ -15,7 +15,8 @@ import {
 } from './reducers/propertyReducers'
 
 import {
-    walletConnect
+    walletConnect,
+    sellerClone
 } from './reducers/walletConnectReducer'
 
 const reducer = combineReducers({
@@ -25,6 +26,7 @@ const reducer = combineReducers({
     listAll: allPropertiesReducer,
     userSpecificProperties: userSpecificPropertiesReducer,
     propertyDetails: propertyDetailsReducer,
+    clone:sellerClone,
     wallet:walletConnect
 })
 

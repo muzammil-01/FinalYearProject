@@ -1,4 +1,5 @@
-import React , {useEffect} from 'react'
+import axios from 'axios'
+import React, { useEffect,useState } from 'react'
 import "./Profile.css"
 import Spinner from '../../components/spinner/Spinner'
 import ListingCard from './ListingCard'
@@ -8,34 +9,55 @@ function Profile() {
     const dispatch = useDispatch()
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+    console.log(userInfo.image[0])
+    const [userPropertyData, setUserPropertyData] = useState(null)
+
+
+    var a = localStorage.getItem('userInfo')
+    if(a){
+      var token = JSON.parse(a).authToken
+    }
+
+    useEffect(() => {
+        fetchUserProperties()
+    }, [])
+
+
+    const fetchUserProperties=async ()=>{
+    const config = {
+        headers: {
+          "auth-token":token
+        }
+      }
+    const {data} = await axios.get("http://localhost:3001/api/property/userproperties",config)
+    console.log(data)
+    setUserPropertyData(data)
+}
 
     const userSpecificProperties = useSelector(state => state.userSpecificProperties)
     const { loading, error, propertyData } = userSpecificProperties
-
-    useEffect(() => {
-        dispatch(getUserSpecificProperties())
-    }, [dispatch])
     return (
         <>
-        <h1 style={{color:"white", textAlign:"center"}}>Your Profile</h1>
+            <h1 style={{ color: "white", textAlign: "center" }}>Your Profile</h1>
             <div className='user-details'>
                 <div className="info">
-                <h4>Name: {userInfo.name}</h4>
-                <h4>ID: {userInfo.id}</h4>
-                <h4>Email: {userInfo.email}</h4>
+                    <h4>Name: {userInfo.name}</h4>
+                    <h4>ID: {userInfo.id}</h4>
+                    <h4>Email: {userInfo.email}</h4>
                 </div>
                 <div className="profile-picture">
-                <img src={`http://localhost:3001/public/images/${userInfo.image}`} alt="..." />
-                </div> 
+                    <img src={`http://localhost:3001/public/images/${userInfo.image[0]}`} alt="..." />
+                </div>
             </div>
 
             {loading && <Spinner />}
             <div className="user-properties">
-                {propertyData && propertyData.map((property) => (
-                        <ListingCard key={property._id} property={property} />
-            )
-            )}
-</div>
+                {userPropertyData && userPropertyData.map((property) => (
+                    <ListingCard key={property._id} property={property} />
+                   
+                )
+                )}
+            </div>
         </>
     )
 }

@@ -1,20 +1,44 @@
+const { faLemon } = require('@fortawesome/fontawesome-free-regular')
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 
 const PropertyDetailsSchema = new Schema({
 
-    user:{
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    propertyName: {
+    ownerName: {
         type: String,
         required: true,
     },
-    propertyLocation: {
+    numberOfSupplies: {
+        type: String,
+        required: true
+    },
+    propertyAddress: {
         type: String,
         required: true,
+    },
+    propertyPrice: {
+        type: String,
+        required: true
+    },
+    PricePerToken:{
+        type:String,
+    },
+    propertyImages:{
+        type:Array,
+        required:true
+    },
+    NumberOfTokenPerWallet:{
+        type:String,
+        required:true,
+    },
+    propertyDocuments:{
+        type:Array,
+        required:true,
     },
     beds: {
         type: String,
@@ -37,10 +61,6 @@ const PropertyDetailsSchema = new Schema({
         required: true,
     },
     postalcode: {
-        type: String,
-        required: true,
-    },
-    streetAddress: {
         type: String,
         required: true,
     },

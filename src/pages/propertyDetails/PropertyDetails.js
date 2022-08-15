@@ -20,8 +20,6 @@ function PropertyDetails() {
     return (
         <>
             <Navbar />
-            <h2 style={{ color: "white", textAlign: "center", marginTop: "30px" }}>TOTAL INVESTMENT: $ 714,402.00</h2>
-
             <CenterNavbar id={id} />
 
             <div className="about-map">

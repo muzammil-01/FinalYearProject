@@ -21,19 +21,19 @@ if(a){
 }
 
 // Add new property
-export const addProperty = (propertyName, propertyLocation, beds, baths, size, country, city, postalcode, streetAddress) => async (dispatch) => {
+export const addProperty = (formData) => async (dispatch) => {
   try {
     dispatch({
       type: ADD_PROPERTY_REQUEST
     })
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         "auth-token":token
       }
     }
    
-    const  {data}  = await axios.post('http://localhost:3001/api/property/addproperty', {propertyName, propertyLocation, beds, baths, size, country, city, postalcode, streetAddress} ,
+    const  {data}  = await axios.post('http://localhost:3001/api/property/check', formData ,
      config)
     console.log(data)
 
@@ -80,32 +80,33 @@ export const getAllProperties = () => async (dispatch) => {
 
 
 // Get user specific properties
-export const getUserSpecificProperties = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: LIST_USER_SPECIFIC_PROPERTY_REQUEST
-    })
+// export const getUserSpecificProperties = () => async (dispatch) => {
+//   try {
+//     dispatch({
+//       type: LIST_USER_SPECIFIC_PROPERTY_REQUEST
+//     })
    
-    const config = {
-      headers: {
-        "auth-token":token
-      }
-    }
-    const {data} = await axios.get("http://localhost:3001/api/property/userproperties",config)
-    console.log(data)
+//     const config = {
+//       headers: {
+//         "auth-token":token
+//       }
+//     }
 
-    dispatch({
-      type: LIST_USER_SPECIFIC_PROPERTY_SUCCESS,
-      payload: data,
-    })
+//     const {data} = await axios.get("http://localhost:3001/api/property/userproperties",config)
+//     console.log(data)
 
-  } catch (error) {
-    dispatch({
-      type: LIST_USER_SPECIFIC_PROPERTY_FAIL,
-      payload: error.response.data
-    })
-  }
-}
+//     dispatch({
+//       type: LIST_USER_SPECIFIC_PROPERTY_SUCCESS,
+//       payload: data,
+//     })
+
+//   } catch (error) {
+//     dispatch({
+//       type: LIST_USER_SPECIFIC_PROPERTY_FAIL,
+//       payload: error.response.data
+//     })
+//   }
+// }
 
 export const listPropertyDetails = (id) => async (dispatch) => {
   try {

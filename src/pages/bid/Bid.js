@@ -4,6 +4,9 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import './Bid.css'
 import image from '../../assets/bed.jpg'
 
+
+
+
 function Bid() {
   return (
     <>

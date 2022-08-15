@@ -17,7 +17,7 @@ const UserSchema = new Schema({
         required:true,
     },
     image:{
-       type: String,
+       type: Array,
     },
     date:{
         type:Date,

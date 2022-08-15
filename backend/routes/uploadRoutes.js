@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage})
-const Arrayupload =  upload.fields([{name:"image",maxCount:1},{name:"documents",maxCount:2}]) 
+const Arrayupload =  upload.fields([{name:"image",maxCount:1},{name:"propertyImages",maxCount:2}]) 
 
 
 // router.post('/', upload.single('image'), (req, res) =>{
@@ -21,7 +21,11 @@ const Arrayupload =  upload.fields([{name:"image",maxCount:1},{name:"documents",
 // })
 
 router.post('/', Arrayupload , (req, res) =>{
-    res.send(req.files)
+    const arr = []
+    for(let i = 0 ; i< req.files.image.length; i++){
+            arr.push(req.files.image[i].originalname)
+    }
+    res.send(arr)
 })
 
 

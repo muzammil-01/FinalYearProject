@@ -3,37 +3,63 @@ const Property = require ('../models/Property')
 const { body, validationResult } = require('express-validator');
 const fetchuser = require('../middleware/fetchuser');
 const router = express.Router()
+const multer = require('multer')
 
+
+
+const storage = multer.diskStorage({
+    destination:(req, file, cb)=>{
+        cb(null,'public/images' )
+    },
+    filename:(req,file,cb)=>{
+        cb(null, file.originalname)
+    },
+})
+
+const upload = multer({storage})
+const Arrayupload =  upload.fields([{name:"propertyImages",maxCount:100},{name:"propertyDocuments",maxCount:100}]) 
+
+
+
+
+// fetch all properties GET /api/property/allproperties
+router.get("/allproperties", async(req,res)=>{
+    const properties =await Property.find({property:req.body._id})
+    res.json(properties)
+})
 
 
 // add property using route '/api/property/addproperty' Auth required
-router.post('/addproperty', fetchuser, [
-    body('propertyName').isLength({ min: 3 }),
-    body('propertyLocation').isLength({ min: 3 }),
-    body('beds').isLength({ min: 1 }),
-    body('baths').isLength({ min: 1 }),
-    body('size').isLength({ min: 1 }),
-    body('country').isLength({ min: 3 }),
-    body('city').isLength({ min: 3 }),
-    body('postalcode').isLength({ min: 3 }),
-    body('streetAddress').isLength({ min: 3 })
-], async (req, res) => {
+router.post('/check',fetchuser,Arrayupload, async (req, res) => {
     // if there are errors return bad request and errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
+        const arrPropertyImages = []
+        for(let i = 0 ; i< req.files.propertyImages.length; i++){
+            arrPropertyImages.push(req.files.propertyImages[i].originalname)
+        }
+        const arrPropertyDocuments = []
+        for(let i = 0 ; i< req.files.propertyDocuments.length; i++){
+            arrPropertyDocuments.push(req.files.propertyDocuments[i].originalname)
+        }
         addProperty = await Property.create({
-            propertyName: req.body.propertyName,
-            propertyLocation: req.body.propertyLocation,
+            ownerName: req.body.ownerName,
+            numberOfSupplies: req.body.numberOfSupplies,
+            propertyAddress: req.body.propertyAddress,
+            propertyPrice: req.body.propertyPrice,
+            PricePerToken: req.body.PricePerToken,
+            propertyImages:arrPropertyImages,
+            NumberOfTokenPerWallet:req.body.NumberOfTokenPerWallet,
+            propertyDocuments:arrPropertyDocuments,
             beds: req.body.beds,
             baths: req.body.baths,
             size: req.body.size,
             country: req.body.country,
             city: req.body.city,
             postalcode: req.body.postalcode,
-            streetAddress: req.body.streetAddress,
             user: req.user.id
         })
         res.json({ addProperty })
@@ -42,15 +68,6 @@ router.post('/addproperty', fetchuser, [
         res.status(500).send("internal server error")
     }
 }) 
-
-// fetch all properties GET /api/property/allproperties
-router.get("/allproperties", async(req,res)=>{
-const properties =await Property.find({property:req.body._id})
-res.json(properties)
-})
-
-
-
 
 // fetch all user specific properties GET /api/property/userproperties
 router.get("/userproperties", fetchuser, async(req,res)=>{

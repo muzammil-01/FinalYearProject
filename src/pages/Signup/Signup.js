@@ -31,11 +31,6 @@ function Signup() {
   const [uploading, setUploading] = useState(false)
 
 
-// useEffect((e) => {
-//   return () => {
-//    setImage(e.target.files)
-//   }
-// },[])
  
 
   const uploadFileHandler = async (e) => {
@@ -45,11 +40,11 @@ function Signup() {
     for(let i = 0;i<e.target.files.length;i++){
         arr.push(e.target.files[i])
       }
-      // setImage(arr)
-      console.log(image)
    
     const formData = new FormData()
-    formData.append('image',image)
+    for(let i = 0; i < arr.length; i++){
+      formData.append('image',arr[i])
+    }
 
     setUploading(true)
 
@@ -60,17 +55,16 @@ function Signup() {
         },
       }
       
-      const { data } = await axios.post('http://localhost:3001/api/upload', formData, config)
-      
-      // setImage(data)
+      const {data}  = await axios.post('http://localhost:3001/api/upload', formData, config)
+      for(let i = 0 ; i<data.length; i++){
+        image.push(data[i])
+      }
       setUploading(false)
     } catch (error) {
       console.error(error.message)
       setUploading(false)
     }
   }
-
-  
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -79,6 +73,7 @@ function Signup() {
       setMessage('Passwords do not match')
     }
     else {
+      console.log(image)
       dispatch(register(name, email, password, image))
     }
   }
@@ -129,14 +124,6 @@ function Signup() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
             required minLength={5} />
-
-          {/* <input
-            type='text'
-            placeholder='Enter image url'
-            value={image}
-            className="inputs"
-            onChange={(e) => setImage(e.target.files)}
-          /> */}
 
           <input
           type='file'
