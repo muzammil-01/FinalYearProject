@@ -29,11 +29,11 @@ function AddProperty() {
 
 
     const [ownerName, setOwnerName] = useState('')
-    const [numberOfSupplies, setNumberOfSupplies] = useState('')
+    const [numberOfSupplies, setNumberOfSupplies] = useState(0)
     const [propertyAddress, setPropertyAddress] = useState('')
-    const [propertyPrice, setPropertyPrice] = useState()
+    const [propertyPrice, setPropertyPrice] = useState(0)
     const [propertyImages, setPropertyImages] = useState([])
-    const [numberOfTokenPerWallet, setNumberOfTokenPerWallet] = useState('')
+    const [numberOfTokenPerWallet, setNumberOfTokenPerWallet] = useState(0)
     const [propertyDocuments, setPropertyDocuments] = useState([])
     const [beds, setBeds] = useState('')
     const [baths, setBaths] = useState('')
@@ -50,12 +50,10 @@ function AddProperty() {
     // var _cloneOwner
     // var _cloneAdd
 
-    // var extra;
-    // var extra2;
+
  
     const Clone = async (_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet) => {
         try {
-            
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
             const address = accounts[0]
             let provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -63,17 +61,18 @@ function AddProperty() {
         const erc721Factory = new ethers.Contract(ERC72FACTORYContractAddress,ERC72FACTORYABI,signer,{gas: 2100000, gasPrice: 8000000000})
        
         const txResponse = await erc721Factory.cloneContract(_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet)
-        erc721Factory.on("CloneCreatedAt", (from, cloneAdd) => {
-            console.log(`print in action contract was created by${from} `)
-            console.log(`print in action clone is deployed at ${cloneAdd}`)
+        erc721Factory.on("CloneCreatedAt", handleCloneValues )
+            // console.log(`print in action contract was created by${from} `)
+            // console.log(`print in action clone is deployed at ${cloneAdd}`)
             //  _cloneOwner=from
             //  _cloneAdd=cloneAdd
-            // extra = cloneAdd
-            // extra2 = from
-            
-        })
-        // console.log("cloneAddress::::::::;",extra)
-        // console.log("cloneOwner::::::::",extra2)
+
+            // console.log("type of clone address",typeof cloneAdd)
+            // console.log("type of clone owner",typeof from)
+            // const vars = await handleCloneValues
+            // console.log("cloneAddress********",CloneAddress)
+            // console.log("cloneOwner*********",CloneOwner)
+        // })
         
     } 
     catch (error) {
@@ -88,15 +87,23 @@ function AddProperty() {
     //     dispatch()
     // }
 
+   const handleCloneValues =(from,cloneAdd)=>{
+    submitHandler(from,cloneAdd)
+
+   }
+
     const getEth = async ()=>{
         const  {data}  = await axios.get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD' )
         setETHpriceToUSD(data.RAW.ETH.USD.PRICE)
       }
 
       let pricePerToken = propertyPrice/ETHpriceToUSD
+      pricePerToken.toString()
+      pricePerToken=ethers.utils.parseEther(pricePerToken)
       
       
-      const submitHandler = async (e) => {
+      
+      const submitHandler = async (from,cloneAdd,e) => {
           e.preventDefault()
       
         //   const Clone = useSelector(state => state.Clone)
@@ -120,8 +127,8 @@ function AddProperty() {
             formData.append('propertyDocuments',arr1[i])
         }
         formData.append('ownerName',ownerName)
-        // formData.append('cloneAddress',_cloneAdd)
-        // formData.append('cloneOwner',_cloneOwner)
+        formData.append('cloneAddress',cloneAdd)
+        formData.append('cloneOwner',from)
         formData.append('numberOfSupplies',numberOfSupplies)
         formData.append('propertyAddress',propertyAddress)
         formData.append('propertyPrice',propertyPrice)
@@ -164,7 +171,7 @@ function AddProperty() {
                         onChange={(e) => setOwnerName(e.target.value)} />
 
                     <input
-                        type="text"
+                        type="Number"
                         name="numberOfSupplies"
                         value={numberOfSupplies}
                         className="inputs"
@@ -186,6 +193,7 @@ function AddProperty() {
                     <input
                         type="Number"
                         name="propertyPrice"
+                        min='0'
                         value={propertyPrice}
                         className="inputs"
                         placeholder="Enter property Price"
@@ -204,10 +212,11 @@ function AddProperty() {
                     />
 
                     <input
-                        type="text"
+                        type="Number"
                         name="NumberOfTokenPerWallet"
                         value={numberOfTokenPerWallet}
                         className="inputs"
+                        min='0'
                         placeholder="Enter Number of token per share per wallet"
                         required
                         onChange={(e) => setNumberOfTokenPerWallet(e.target.value)} />
@@ -246,7 +255,7 @@ function AddProperty() {
 
 
                     <input
-                        type="text"
+                        type="Number"
                         name="size"
                         value={size}
                         className="inputs"
@@ -288,7 +297,7 @@ function AddProperty() {
                     <button className='logbtn'>Submit</button>
                     <br/>
                 </form>
-                    <button className='logbtn' onClick={()=>Clone("jama masjid","abuzar ahmed",10,20,30)}>try button</button>
+                    <button className='logbtn' onClick={()=>Clone(propertyAddress,ownerName,numberOfSupplies, pricePerToken,numberOfTokenPerWallet)}>try button</button>
             </div>
         </>
     )
