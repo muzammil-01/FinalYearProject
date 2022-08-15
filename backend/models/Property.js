@@ -13,6 +13,12 @@ const PropertyDetailsSchema = new Schema({
         type: String,
         required: true,
     },
+    cloneAddress: {
+        type: String,
+    },
+    cloneOwner: {
+        type: String,
+    },
     numberOfSupplies: {
         type: String,
         required: true

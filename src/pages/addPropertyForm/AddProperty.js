@@ -1,10 +1,12 @@
 import axios from 'axios'
+import { ethers } from "ethers";
+import {ERC721ABI,ERC72FACTORYABI,ERC72FACTORYContractAddress} from "../../Redux/constants/erc721ABI"
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addProperty } from '../../Redux/actions/propertyActions'
 import './AddProperty.css'
-import { Clone } from '../../Redux/actions/connectWalletAction'
+// import { Clone } from '../../Redux/actions/connectWalletAction'
 import Spinner from '../../components/spinner/Spinner'
 
 function AddProperty() {
@@ -42,47 +44,49 @@ function AddProperty() {
     const [ETHpriceToUSD, setETHpriceToUSD] = useState(0)
     const [message, setMessage] = useState("")
     const [uploading, setUploading] = useState(false)
+    const [CloneAddress, setCloneAddress] = useState("")
+    const [CloneOwner, setCloneOwner] = useState("")
 
+    // var _cloneOwner
+    // var _cloneAdd
 
-
-
-    // const uploadFileHandler = async (e) => {
-    //     e.preventDefault()
-      
-    //     const arr =[]
-    //     for(let i = 0;i<e.target.files.length;i++){
-    //         arr.push(e.target.files[i])
-    //       }
+    // var extra;
+    // var extra2;
+ 
+    const Clone = async (_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet) => {
+        try {
+            
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
+            const address = accounts[0]
+            let provider = new ethers.providers.Web3Provider(window.ethereum)
+            let signer = provider.getSigner()
+        const erc721Factory = new ethers.Contract(ERC72FACTORYContractAddress,ERC72FACTORYABI,signer,{gas: 2100000, gasPrice: 8000000000})
        
-    //     const formData = new FormData()
-    //     for(let i = 0; i < arr.length; i++){
-    //       formData.append('propertyImages',arr[i])
-    //     }
-    
-    //     setUploading(true)
-    
-    //     try {
-    //       const config = {
-    //         headers: {
-    //           'Content-Type': 'multipart/form-data',
-    //         },
-    //       }
-
-    //       const {data}  = await axios.post('http://localhost:3001/api/upload', formData, config)
-    //       console.log(data)
-    //       for(let i = 0 ; i<data.length; i++){
-    //         propertyImages.push(data[i])
-    //       }
-
-    //       setUploading(false)
-    //     } catch (error) {
-    //       console.error(error.message)
-    //       setUploading(false)
-    //     }
-    //   }
-    const chalo = ()=>{
-        dispatch(Clone(propertyAddress,ownerName,10,20,30))
+        const txResponse = await erc721Factory.cloneContract(_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet)
+        erc721Factory.on("CloneCreatedAt", (from, cloneAdd) => {
+            console.log(`print in action contract was created by${from} `)
+            console.log(`print in action clone is deployed at ${cloneAdd}`)
+            //  _cloneOwner=from
+            //  _cloneAdd=cloneAdd
+            // extra = cloneAdd
+            // extra2 = from
+            
+        })
+        // console.log("cloneAddress::::::::;",extra)
+        // console.log("cloneOwner::::::::",extra2)
+        
+    } 
+    catch (error) {
+        console.log(error)
     }
+    
+}
+// console.log("clone address11111111111111",_cloneAdd)
+// console.log("clone owner1111111111111111",_cloneOwner)
+
+    // const chalo = ()=>{
+    //     dispatch()
+    // }
 
     const getEth = async ()=>{
         const  {data}  = await axios.get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD' )
@@ -116,6 +120,8 @@ function AddProperty() {
             formData.append('propertyDocuments',arr1[i])
         }
         formData.append('ownerName',ownerName)
+        // formData.append('cloneAddress',_cloneAdd)
+        // formData.append('cloneOwner',_cloneOwner)
         formData.append('numberOfSupplies',numberOfSupplies)
         formData.append('propertyAddress',propertyAddress)
         formData.append('propertyPrice',propertyPrice)
@@ -282,7 +288,7 @@ function AddProperty() {
                     <button className='logbtn'>Submit</button>
                     <br/>
                 </form>
-                    <button className='logbtn' onClick={chalo}>try button</button>
+                    <button className='logbtn' onClick={()=>Clone("jama masjid","abuzar ahmed",10,20,30)}>try button</button>
             </div>
         </>
     )

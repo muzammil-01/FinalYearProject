@@ -19,13 +19,13 @@ export const walletConnect = (state = {}, action) => {
     }
 }
 
-export const sellerClone = (state = null , action) =>{
-    switch (action.type){
-        case SELLER_WALLET_AND_CLONE_ADDRESS_SUCCESS:
-            return{cloneInfo: action.payload}
-        case SELLER_WALLET_AND_CLONE_ADDRESS_FAIL:
-            return {error: action.payload}
-            default:
-            return state
-    }
-}
+// export const sellerClone = (state = {}, action) => {
+//     switch (action.type) {
+//         case SELLER_WALLET_AND_CLONE_ADDRESS_SUCCESS:
+//             return { cloneInfo: action.payload }
+//         case SELLER_WALLET_AND_CLONE_ADDRESS_FAIL:
+//             return { error: action.payload }
+//         default:
+//             return state
+//     }
+// }

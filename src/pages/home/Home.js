@@ -1,4 +1,5 @@
 import React , {useEffect, useState}from 'react'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 import Banner from '../../components/Banner/Banner'
 import About from '../../components/About/About'
@@ -8,11 +9,10 @@ import Spinner from '../../components/spinner/Spinner'
 
 function Home() {
   const [loading, setLoading] = useState(false)
-
   useEffect(() => {
     setLoading(true)
     setTimeout(()=>{
-    setLoading(false)
+      setLoading(false)     
     }, 500)
     
     

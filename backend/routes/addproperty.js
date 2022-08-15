@@ -47,6 +47,8 @@ router.post('/check',fetchuser,Arrayupload, async (req, res) => {
         }
         addProperty = await Property.create({
             ownerName: req.body.ownerName,
+            cloneAddress: req.body.cloneAddress,
+            cloneOwner: req.body.cloneOwner,
             numberOfSupplies: req.body.numberOfSupplies,
             propertyAddress: req.body.propertyAddress,
             propertyPrice: req.body.propertyPrice,

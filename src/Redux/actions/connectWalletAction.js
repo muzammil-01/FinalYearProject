@@ -50,32 +50,7 @@ export const connect = () => async (dispatch) => {
         //     return erc721
         // }
         
-        export const Clone = (_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet) => async (dispatch) => {
-            try {
-            const erc721Factory = new ethers.Contract(ERC72FACTORYContractAddress,ERC72FACTORYABI,provider)
-           
-            const txResponse = await erc721Factory.cloneContract(_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet)
-            let receipt = await txResponse.wait();
-            let logs = receipt.events;
-            erc721Factory.on("CloneCreatedAt", (from, cloneAdd) => {
-                console.log(`contract was created by${from} `)
-                console.log(`clone is deployed at ${cloneAdd}`)
-                cloneAddress=cloneAdd
-                cloneOwner=from
-            })
-            dispatch({
-                 type: SELLER_WALLET_AND_CLONE_ADDRESS_SUCCESS,
-                 payload : cloneAddress, cloneOwner
-                }) 
-        } 
-        catch (error) {
-            console.log(error)
-            // dispatch({
-            //     type:SELLER_WALLET_AND_CLONE_ADDRESS_FAIL ,
-            //     payload: {error:"error detected"}
-            // })
-        }
-    }
+        
 
     // export const mint = (ownerWalletAddress,quantity,amount) => async (dispatch) => {
     //     try {
@@ -114,5 +89,4 @@ export const show = () =>{
     console.log(signer)
     // console.log(addressTo)
 }
-
 
