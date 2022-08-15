@@ -1,4 +1,3 @@
-```javascript
 export const ERC721ABI=[
     {
       "anonymous": false,
@@ -719,9 +718,8 @@ export const ERC721ABI=[
       "type": "function"
     }
   ]
-  ```
+  
 
-```javascript
  export const ERC72FACTORYABI=[
     {
       "inputs": [],
@@ -839,4 +837,4 @@ export const ERC721ABI=[
   ]
 export const ERC72FACTORYContractAddress="0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8"
 
-```
+
