@@ -8,6 +8,8 @@ import { listPropertyDetails } from '../../Redux/actions/propertyActions'
 import map from '../../assets/map.jpg'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Slider from '../../components/slider/Slider'
+import Mint from '../../components/Mint/Mint'
 
 
 function PropertyDetails() {
@@ -20,6 +22,8 @@ function PropertyDetails() {
     return (
         <>
             <Navbar />
+            {/* <Slider id={id}/> */}
+            <Mint id={id}/>
             <CenterNavbar id={id} />
 
             <div className="about-map">

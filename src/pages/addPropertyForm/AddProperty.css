@@ -1,9 +1,9 @@
-
     .property-form{
         width:500px;
         text-align: center;
         margin:70px auto;
         border-radius:5px;
+        border: 0.3px rgba(15, 84, 148, 0.781);
         padding:20px 40px;
         background-color: #182b3c;
         box-shadow: 10px 3px 38px 0px rgba(0,0,0,0.3);

@@ -20,41 +20,7 @@ function TokensForSale() {
         }}>Buy Tokens</button>
       </p>
 
-      {/* <p className='tokensforsale'>
-        <FontAwesomeIcon icon={faCircleUser} className="userIcon"/>
-        0x5D0436F003AEF56990194f79A242Bc185843aEa5
-        <span> No. of Tokens </span> x
-        <span> Price of 1 Token </span> =
-        <span> Total Price</span>
-        <button className='buytokensbtn'>Buy Tokens</button>
-      </p>
-
-      <p className='tokensforsale'>
-        <FontAwesomeIcon icon={faCircleUser} className="userIcon"/>
-        0x5D0436F003AEF56990194f79A242Bc185843aEa5
-        <span> No. of Tokens </span> x
-        <span> Price of 1 Token </span> =
-        <span> Total Price</span>
-        <button className='buytokensbtn'>Buy Tokens</button>
-      </p>
-
-      <p className='tokensforsale'>
-        <FontAwesomeIcon icon={faCircleUser} className="userIcon"/>
-        0x5D0436F003AEF56990194f79A242Bc185843aEa5
-        <span> No. of Tokens </span> x
-        <span> Price of 1 Token </span> =
-        <span> Total Price</span>
-        <button className='buytokensbtn'>Buy Tokens</button>
-      </p>
-
-      <p className='tokensforsale'>
-        <FontAwesomeIcon icon={faCircleUser} className="userIcon"/>
-        0x5D0436F003AEF56990194f79A242Bc185843aEa5
-        <span> No. of Tokens </span> x
-        <span> Price of 1 Token </span> =
-        <span> Total Price</span>
-        <button className='buytokensbtn'>Buy Tokens</button>
-      </p> */}
+      
       {modalOpen && <Modal setOpenModal={setModalOpen} />}
     </div>
   )

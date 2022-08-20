@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { ethers } from "ethers";
-import {ERC721ABI,ERC72FACTORYABI,ERC72FACTORYContractAddress} from "../../Redux/constants/erc721ABI"
+import { ERC721ABI, ERC72FACTORYABI, ERC72FACTORYContractAddress } from "../../Redux/constants/erc721ABI"
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addProperty } from '../../Redux/actions/propertyActions'
 import './AddProperty.css'
-// import { Clone } from '../../Redux/actions/connectWalletAction'
+import SuccessModal from '../../components/success modal/SuccessModal';
 import Spinner from '../../components/spinner/Spinner'
 
 function AddProperty() {
@@ -23,7 +23,6 @@ function AddProperty() {
             alert("please Login first")
             navigate('/login')
         }
-        getEth()
     }, [])
 
 
@@ -44,118 +43,103 @@ function AddProperty() {
     const [ETHpriceToUSD, setETHpriceToUSD] = useState(0)
     const [message, setMessage] = useState("")
     const [uploading, setUploading] = useState(false)
-    const [CloneAddress, setCloneAddress] = useState("")
-    const [CloneOwner, setCloneOwner] = useState("")
+    const [CloneAddress, setCloneAddress] = useState(null)
+    const [CloneOwner, setCloneOwner] = useState(null)
+    const [Pricepertoken, setPricepertoken] = useState(null)
+    const [successfull, setSuccessfull] = useState(false)
 
-    // var _cloneOwner
-    // var _cloneAdd
 
 
- 
-    const Clone = async (_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet) => {
+    const Clone = async (_propertyAddress, _ownerName, _totalSupply, _tokensPerWallet) => {
         try {
+            setUploading(true)
+            let pricePerToken = (propertyPrice / ETHpriceToUSD).toString()
+            setPricepertoken(pricePerToken)
+            pricePerToken = ethers.utils.parseEther(pricePerToken, 18)
+            console.log(pricePerToken)
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
             const address = accounts[0]
             let provider = new ethers.providers.Web3Provider(window.ethereum)
             let signer = provider.getSigner()
-        const erc721Factory = new ethers.Contract(ERC72FACTORYContractAddress,ERC72FACTORYABI,signer,{gas: 2100000, gasPrice: 8000000000})
-       
-        const txResponse = await erc721Factory.cloneContract(_propertyAddress,_ownerName,_totalSupply, _pricePerToken,_tokensPerWallet)
-        erc721Factory.on("CloneCreatedAt", handleCloneValues )
-            // console.log(`print in action contract was created by${from} `)
-            // console.log(`print in action clone is deployed at ${cloneAdd}`)
-            //  _cloneOwner=from
-            //  _cloneAdd=cloneAdd
+            const erc721Factory = new ethers.Contract(ERC72FACTORYContractAddress, ERC72FACTORYABI, signer, { gas: 2100000, gasPrice: 8000000000 })
 
-            // console.log("type of clone address",typeof cloneAdd)
-            // console.log("type of clone owner",typeof from)
-            // const vars = await handleCloneValues
-            // console.log("cloneAddress********",CloneAddress)
-            // console.log("cloneOwner*********",CloneOwner)
-        // })
-        
-    } 
-    catch (error) {
-        console.log(error)
+            const txResponse = await erc721Factory.cloneContract(_propertyAddress, _ownerName, _totalSupply, pricePerToken, _tokensPerWallet)
+            erc721Factory.on("CloneCreatedAt", (from, cloneAdd) => {
+                setCloneAddress(prevAdd => (prevAdd = from))
+                setCloneOwner(prevAdd => (prevAdd = cloneAdd))
+
+            })
+        }
+        catch (error) {
+            setMessage(error)
+            console.log(error.message)
+        }
     }
-    
-}
-// console.log("clone address11111111111111",_cloneAdd)
-// console.log("clone owner1111111111111111",_cloneOwner)
 
-    // const chalo = ()=>{
-    //     dispatch()
-    // }
+    useEffect(() => {
+        getEth()
+        if (CloneOwner !== null && CloneAddress !== null && Pricepertoken !== null) {
+            submitHandler()
+            console.log(CloneAddress)
+            console.log(CloneOwner)
+            console.log(Pricepertoken)
+        }
+    }, [CloneOwner, CloneAddress, Pricepertoken]);
 
-   const handleCloneValues =(from,cloneAdd)=>{
-    submitHandler(from,cloneAdd)
-
-   }
-
-    const getEth = async ()=>{
-        const  {data}  = await axios.get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD' )
+    const getEth = async () => {
+        const { data } = await axios.get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD')
         setETHpriceToUSD(data.RAW.ETH.USD.PRICE)
-      }
+    }
 
-      let pricePerToken = propertyPrice/ETHpriceToUSD
-      pricePerToken.toString()
-      pricePerToken=ethers.utils.parseEther(pricePerToken)
-      
-      
-      
-      const submitHandler = async (from,cloneAdd,e) => {
-          e.preventDefault()
-      
-        //   const Clone = useSelector(state => state.Clone)
-          const formData = new FormData()
-          const arr =[]
-          for(let i = 0;i<propertyImages.length;i++){
-              arr.push(propertyImages[i])
-            }  
-            const arr1 =[]
-            for(let i = 0;i<propertyDocuments.length;i++){
-              arr1.push(propertyDocuments[i])
-        }
-        
-        var pr = pricePerToken.toString();
-        console.log(typeof pr)
-        
-        for(let i = 0; i < arr.length; i++){
-            formData.append('propertyImages',arr[i])
-        }  
-        for(let i = 0; i < arr1.length; i++){
-            formData.append('propertyDocuments',arr1[i])
-        }
-        formData.append('ownerName',ownerName)
-        formData.append('cloneAddress',cloneAdd)
-        formData.append('cloneOwner',from)
-        formData.append('numberOfSupplies',numberOfSupplies)
-        formData.append('propertyAddress',propertyAddress)
-        formData.append('propertyPrice',propertyPrice)
-        formData.append('PricePerToken',pricePerToken)
-        formData.append('NumberOfTokenPerWallet',numberOfTokenPerWallet)
-        formData.append('beds',beds)
-        formData.append('baths',baths)
-        formData.append('country',country)
-        formData.append('size',size)
-        formData.append('city',city)
-        formData.append('postalcode',postalcode)
-        console.log(formData)
-       
 
-        dispatch(addProperty(formData))
-        alert("successfully submitted property")
-        // navigate('/')
+
+    const submitHandler = async (e) => {
+        if (e && e.preventDefault) { e.preventDefault(); }
+        const formData = new FormData()
+        const arr = []
+        for (let i = 0; i < propertyImages.length; i++) {
+            arr.push(propertyImages[i])
+        }
+        const arr1 = []
+        for (let i = 0; i < propertyDocuments.length; i++) {
+            arr1.push(propertyDocuments[i])
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+            formData.append('propertyImages', arr[i])
+        }
+        for (let i = 0; i < arr1.length; i++) {
+            formData.append('propertyDocuments', arr1[i])
+        }
+
+        formData.append('ownerName', ownerName)
+        formData.append('cloneAddress', CloneAddress)
+        formData.append('cloneOwner', CloneOwner)
+        formData.append('numberOfSupplies', numberOfSupplies)
+        formData.append('propertyAddress', propertyAddress)
+        formData.append('propertyPrice', propertyPrice)
+        formData.append('PricePerToken', Pricepertoken)
+        formData.append('NumberOfTokenPerWallet', numberOfTokenPerWallet)
+        formData.append('beds', beds)
+        formData.append('baths', baths)
+        formData.append('country', country)
+        formData.append('size', size)
+        formData.append('city', city)
+        formData.append('postalcode', postalcode)
+
+        if (CloneAddress !== null && CloneOwner !== null) {
+            dispatch(addProperty(formData))
+            setUploading(false)
+            setSuccessfull(true)
+        }
 
     }
     return (
         <>
-
-            {error && <div className='error'>{error}</div>}
-            {loading && <Spinner />}
             <div>
-                {loading && <Spinner />}
-                {error && <div className='error'>{error}</div>}
+                {successfull && <SuccessModal />}
+                {uploading && <Spinner />}
+                {error && <div className='error'>{message}</div>}
                 <form className="property-form" onSubmit={submitHandler} encType="multipart/form-data">
                     <div className="top-heading">
                         <h1>Add Property</h1>
@@ -201,14 +185,14 @@ function AddProperty() {
                         onChange={(e) => setPropertyPrice(e.target.value)} />
 
 
-                    
+
                     <input
                         type='file'
                         id='image-file'
                         label='Choose File'
                         className='inputs'
                         multiple
-                        onChange={(e)=> setPropertyImages(e.target.files)}
+                        onChange={(e) => setPropertyImages(e.target.files)}
                     />
 
                     <input
@@ -227,7 +211,7 @@ function AddProperty() {
                         label='Choose File'
                         className='inputs'
                         multiple
-                        onChange={(e)=> setPropertyDocuments(e.target.files)}
+                        onChange={(e) => setPropertyDocuments(e.target.files)}
                     />
 
 
@@ -239,7 +223,7 @@ function AddProperty() {
                         className="inputs"
                         placeholder="No of beds"
                         required
-                        onChange={(e)=> setBeds(e.target.value)} />
+                        onChange={(e) => setBeds(e.target.value)} />
 
 
                     <input
@@ -250,7 +234,7 @@ function AddProperty() {
                         className="inputs"
                         placeholder="No of baths"
                         required
-                        onChange={(e)=>setBaths(e.target.value)} />
+                        onChange={(e) => setBaths(e.target.value)} />
 
 
 
@@ -261,7 +245,7 @@ function AddProperty() {
                         className="inputs"
                         placeholder="Enter Area in sqft"
                         required
-                        onChange={(e)=>setSize(e.target.value)} />
+                        onChange={(e) => setSize(e.target.value)} />
 
 
                     <input
@@ -271,7 +255,7 @@ function AddProperty() {
                         className="inputs"
                         placeholder="Enter country"
                         required
-                        onChange={(e)=>setCountry(e.target.value)}/>
+                        onChange={(e) => setCountry(e.target.value)} />
 
 
                     <input
@@ -281,7 +265,7 @@ function AddProperty() {
                         className="inputs"
                         placeholder="Enter city"
                         required
-                        onChange={(e)=>setCity(e.target.value)} />
+                        onChange={(e) => setCity(e.target.value)} />
 
 
                     <input
@@ -291,13 +275,12 @@ function AddProperty() {
                         className="inputs"
                         placeholder="Enter postalcode"
                         required
-                        onChange={(e)=>setPostalCode(e.target.value)} />
+                        onChange={(e) => setPostalCode(e.target.value)} />
 
                     <br />
-                    <button className='logbtn'>Submit</button>
-                    <br/>
+                    <button className='logbtn' onClick={() => Clone(propertyAddress, ownerName, numberOfSupplies, numberOfTokenPerWallet)}>Submit</button>
+                    <br />
                 </form>
-                    <button className='logbtn' onClick={()=>Clone(propertyAddress,ownerName,numberOfSupplies, pricePerToken,numberOfTokenPerWallet)}>try button</button>
             </div>
         </>
     )

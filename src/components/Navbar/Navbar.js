@@ -7,7 +7,7 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../Redux/actions/userActions'
 import Logo from '../../assets/logo.png'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import {connect,get_Signer} from '../../Redux/actions/connectWalletAction'
 
 
@@ -17,8 +17,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-
-  
+  const [product,setProduct] = useState([])
 
   const logoutHandler = () => {
     dispatch(logout())
@@ -29,6 +28,23 @@ const Navbar = () => {
     dispatch(connect())
   }
 
+  const handleSearch = async (e) =>{
+    let key = e.target.value
+    if(key){
+
+      let result = await fetch(`http://localhost:3001/search/${key}`);
+      result = await result.json();
+      if(result){
+        setProduct(result)
+      }
+      console.log(product)
+    }
+    else{
+      console.log("hello world")
+    }
+    }
+
+
 
   return (
     <div>
@@ -37,9 +53,10 @@ const Navbar = () => {
         <div className="icon">
           <img src={Logo} alt="logo" />
         </div>
-        <div className="search_box">
-          <input type="search" placeholder="Search here" />
-          <span className="fa fa-search" />
+
+          <div className="search_box">
+          <input type="search" placeholder="Search here" onChange={handleSearch}/>
+          <span className="fa fa-search"/>
         </div>
 
         <ol>

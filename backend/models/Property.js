@@ -1,4 +1,3 @@
-const { faLemon } = require('@fortawesome/fontawesome-free-regular')
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 

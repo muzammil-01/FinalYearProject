@@ -6,6 +6,7 @@ import { register } from '../../Redux/actions/userActions'
 import { useNavigate } from 'react-router-dom'
 import './Signup.css'
 import Spinner from '../../components/spinner/Spinner'
+import SuccessModal from '../../components/success modal/SuccessModal'
 
 function Signup() {
 
@@ -16,12 +17,7 @@ function Signup() {
   const { loading, error, userInfo } = userRegister
 
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate("/")
-    }
-  }, [navigate, userInfo])
-
+  
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -29,21 +25,29 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
   const [uploading, setUploading] = useState(false)
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/")
+    }
+  }, [navigate, userInfo])
+  
 
 
- 
+
 
   const uploadFileHandler = async (e) => {
     e.preventDefault()
-  
-    const arr =[]
-    for(let i = 0;i<e.target.files.length;i++){
-        arr.push(e.target.files[i])
-      }
-   
+
+    const arr = []
+    for (let i = 0; i < e.target.files.length; i++) {
+      arr.push(e.target.files[i])
+    }
+
     const formData = new FormData()
-    for(let i = 0; i < arr.length; i++){
-      formData.append('image',arr[i])
+    for (let i = 0; i < arr.length; i++) {
+      formData.append('image', arr[i])
     }
 
     setUploading(true)
@@ -54,32 +58,37 @@ function Signup() {
           'Content-Type': 'multipart/form-data',
         },
       }
-      
-      const {data}  = await axios.post('http://localhost:3001/api/upload', formData, config)
-      for(let i = 0 ; i<data.length; i++){
+
+      const { data } = await axios.post('http://localhost:3001/api/upload', formData, config)
+      for (let i = 0; i < data.length; i++) {
         image.push(data[i])
       }
       setUploading(false)
     } catch (error) {
-      console.error(error.message)
+      console.log(error.message)
       setUploading(false)
     }
   }
+
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
+      setShow(true)
+
+      setTimeout(() => {
+        setShow(false)
+      }, 2000);
+
     }
     else {
-      console.log(image)
       dispatch(register(name, email, password, image))
     }
   }
   return (
     <>
-      {error && <div className='error'>{error}</div>}
       {loading && <Spinner />}
       <div className='signup-box'>
         <form className="signup-form" onSubmit={submitHandler} encType="multipart/form-data">
@@ -104,6 +113,7 @@ function Signup() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address" />
+            {error && <div className='error'>{error}</div>}
 
 
           <input
@@ -125,15 +135,16 @@ function Signup() {
             placeholder="Confirm Password"
             required minLength={5} />
 
-          <input
-          type='file'
-          id='image-file'
-          label='Choose File'
-          onChange={uploadFileHandler}
-          />
-          {uploading && <Spinner/>}
+            {show && message && <div className='error'>{message}</div>}
 
-          {message && <div className='error'>{message}</div>}
+          <input
+            type='file'
+            id='image-file'
+            label='Choose File'
+            onChange={uploadFileHandler}
+          />
+          {uploading && <Spinner />}
+
           <button className='submitbtn'>Submit</button>
           <p>
             By clicking the Sign Up button, you agree to our

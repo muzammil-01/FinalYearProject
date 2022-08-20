@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState} from 'react'
 import Footer from '../../components/Footer/Footer'
 import Navbar from '../../components/Navbar/Navbar'
 import './Marketplace.css'
@@ -14,11 +14,14 @@ const Marketplace = () => {
     useEffect(() => {
         dispatch(getAllProperties())
     }, [dispatch])
+
+ 
     
     const listAll = useSelector(state => state.listAll)
     const { loading, error, propertyData } = listAll
     return (
         <>
+
             <Navbar />
             {loading && <Spinner />}
             {propertyData && propertyData.map((property) => (

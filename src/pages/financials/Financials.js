@@ -1,19 +1,23 @@
 import React from 'react'
 import "./Financials.css"
+import { useSelector } from 'react-redux'
+
 
 function Financials() {
+  const propertyDetails = useSelector(state => state.propertyDetails)
+  const { loading, error, property } = propertyDetails
   return (
 <>
        <h2 className='financial-heading'>Property Financials</h2>
       <div className='financial'>
         <div className="financial-details">
           <h2>
-            <h5>Expected Income</h5>
-            <span className='gapleft'>10.5%</span>
+            <h5>Property price</h5>
+            <span className='gapleft'>$ {property.propertyPrice}</span>
           </h2>
           <h2>
-            <h5>Rent Start Date</h5>
-            <span className='gapleft'>2022-04-21</span>
+            <h5>Total tokens/shares</h5>
+            <span className='gapleft'>{property.numberOfSupplies}</span>
           </h2>
           <h2>
             <h5>Rent per Token</h5>
@@ -21,7 +25,7 @@ function Financials() {
           </h2>
           <h2>
             <h5>Token Price</h5>
-            <span className='gapleft'>$ 50.31</span>
+            <span className='gapleft'>$ {property.PricePerToken}</span>
           </h2>
           <h2>
             <h5>Total Tokens</h5>

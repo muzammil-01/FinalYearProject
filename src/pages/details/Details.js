@@ -10,6 +10,8 @@ function Details() {
   const { loading, error, property } = propertyDetails
   console.log(property)
 
+  
+
 
   return (
     <>
@@ -17,8 +19,16 @@ function Details() {
       <h2 className='propertydetails-heading'>PROPERTY DETAILS</h2>
         <div className="property-details">
           <h2>
-            <h5> Property name</h5>
-            <span className='gapleft'>{property.propertyName}</span>
+            <h5> Owner name</h5>
+            <span className='gapleft'>{property.ownerName}</span>
+          </h2>
+          <h2>
+            <h5> Property Contract Address</h5>
+            <span className='gapleft'>{property.cloneAddress}</span>
+          </h2>
+          <h2>
+            <h5> Property Contract Owner </h5>
+            <span className='gapleft'>{property.cloneOwner}</span>
           </h2>
           <h2>
             <h5>Area</h5>
@@ -42,7 +52,7 @@ function Details() {
           </h2>
           <h2>
             <h5>Address</h5>
-            <span className='gapleft'>{property.streetAddress} {property.propertyLocation}</span>
+            <span className='gapleft'>{property.propertyAddress} {property.propertyLocation}</span>
           </h2>
           <h2>
             <h5>Postal code</h5>
@@ -52,14 +62,7 @@ function Details() {
             <h5>Type</h5>
             <span className='gapleft'>undefined</span>
           </h2>
-          <h2 style={{border:"none"}}>
-            <h5>Token price</h5>
-            <span className='gapleft'>undefined</span>
-          </h2>
-          <h2 style={{border:"none"}}>
-            <h5>Total tokens</h5>
-            <span className='gapleft'>undefined</span>
-          </h2>
+          
     </div>
     </div>
     </>

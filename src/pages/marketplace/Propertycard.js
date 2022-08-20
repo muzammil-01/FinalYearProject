@@ -1,13 +1,17 @@
-import React from 'react'
+import React , {useState} from 'react'
 import { Link } from 'react-router-dom'
 import image from '../../assets/bed.jpg'
 function Propertycard({ property }) {
+
+
     return (
         <div>
+       
+
             <div className='market-card'>
                 <div className='content' >
                     <div className='image'>
-                        <img src={image} alt="" />
+                        <img src={`http://localhost:3001/public/images/${property.propertyImages[0]}`} alt="" />
                     </div>
                     <div className='details'>
                         <div className='pricing'>

@@ -1,6 +1,6 @@
 const express = require('express')
 const Property = require ('../models/Property')
-const { body, validationResult } = require('express-validator');
+const {validationResult } = require('express-validator');
 const fetchuser = require('../middleware/fetchuser');
 const router = express.Router()
 const multer = require('multer')

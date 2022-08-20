@@ -3,15 +3,11 @@ import React, { useEffect,useState } from 'react'
 import "./Profile.css"
 import Spinner from '../../components/spinner/Spinner'
 import ListingCard from './ListingCard'
-import { getUserSpecificProperties } from '../../Redux/actions/propertyActions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 function Profile() {
-    const dispatch = useDispatch()
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
-    console.log(userInfo.image[0])
     const [userPropertyData, setUserPropertyData] = useState(null)
-
 
     var a = localStorage.getItem('userInfo')
     if(a){
@@ -30,7 +26,6 @@ function Profile() {
         }
       }
     const {data} = await axios.get("http://localhost:3001/api/property/userproperties",config)
-    console.log(data)
     setUserPropertyData(data)
 }
 
