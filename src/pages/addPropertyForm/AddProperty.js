@@ -96,6 +96,7 @@ function AddProperty() {
     const submitHandler = async (e) => {
         if (e && e.preventDefault) { e.preventDefault(); }
         const formData = new FormData()
+        const formData1 = new FormData()
         const arr = []
         for (let i = 0; i < propertyImages.length; i++) {
             arr.push(propertyImages[i])
@@ -111,15 +112,12 @@ function AddProperty() {
         for (let i = 0; i < arr1.length; i++) {
             formData.append('propertyDocuments', arr1[i])
         }
-
         formData.append('ownerName', ownerName)
-        formData.append('cloneAddress', CloneAddress)
-        formData.append('cloneOwner', CloneOwner)
+        formData.append('PropertyContractAddress', CloneAddress)
+        formData.append('OwnerWalletAddress', CloneOwner)
         formData.append('numberOfSupplies', numberOfSupplies)
         formData.append('propertyAddress', propertyAddress)
         formData.append('propertyPrice', propertyPrice)
-        formData.append('PricePerToken', Pricepertoken)
-        formData.append('NumberOfTokenPerWallet', numberOfTokenPerWallet)
         formData.append('beds', beds)
         formData.append('baths', baths)
         formData.append('country', country)
@@ -127,10 +125,18 @@ function AddProperty() {
         formData.append('city', city)
         formData.append('postalcode', postalcode)
 
+
+        formData1.append('PricePerToken', Pricepertoken)
+        formData1.append('SellerWalletAddress', CloneOwner)
+        formData.append('TotalSupplies', numberOfSupplies)
+        formData1.append('NumberOfTokenPerWallet', numberOfTokenPerWallet)
+
+        
         if (CloneAddress !== null && CloneOwner !== null) {
-            dispatch(addProperty(formData))
+            dispatch(addProperty(formData, Pricepertoken,CloneOwner,numberOfSupplies,numberOfTokenPerWallet))
+            
             setUploading(false)
-            setSuccessfull(true)
+            // setSuccessfull(true)
         }
 
     }
@@ -138,7 +144,7 @@ function AddProperty() {
         <>
             <div>
                 {successfull && <SuccessModal />}
-                {uploading && <Spinner />}
+                {/* {uploading && <Spinner />} */}
                 {error && <div className='error'>{message}</div>}
                 <form className="property-form" onSubmit={submitHandler} encType="multipart/form-data">
                     <div className="top-heading">

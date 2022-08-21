@@ -9,6 +9,7 @@ function Financials() {
   return (
 <>
        <h2 className='financial-heading'>Property Financials</h2>
+      {property && 
       <div className='financial'>
         <div className="financial-details">
           <h2>
@@ -45,6 +46,7 @@ function Financials() {
           </h2>
     </div>
     </div>
+}
 </>
   )
 }

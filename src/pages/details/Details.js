@@ -15,6 +15,8 @@ function Details() {
 
   return (
     <>
+    {property && 
+    
       <div className='propertydetails'>
       <h2 className='propertydetails-heading'>PROPERTY DETAILS</h2>
         <div className="property-details">
@@ -65,6 +67,7 @@ function Details() {
           
     </div>
     </div>
+}
     </>
   )
 }

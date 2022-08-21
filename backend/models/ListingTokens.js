@@ -8,7 +8,7 @@ const ListingTokens = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    property:{
+    propertyId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'property'
     },
@@ -16,7 +16,7 @@ const ListingTokens = new Schema({
         type: String,
         required: true
     },
-    numberOfSupplies: {
+    TotalSupplies: {
         type: String,
         required: true
     },
@@ -31,9 +31,6 @@ const ListingTokens = new Schema({
         type: Date,
         default: Date.now
     },
-    quantity:{
-        type: String,
-        required: true
-    }
+  
 })
 module.exports = mongoose.model('listingTokens', ListingTokens)

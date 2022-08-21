@@ -22,7 +22,9 @@ function PropertyDetails() {
     return (
         <>
             <Navbar />
-            {/* <Slider id={id}/> */}
+        {/* <Slider/> */}
+            
+
             <Mint id={id}/>
             <CenterNavbar id={id} />
 

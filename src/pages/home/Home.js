@@ -6,7 +6,6 @@ import About from '../../components/About/About'
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import Spinner from '../../components/spinner/Spinner'
-
 function Home() {
   const [loading, setLoading] = useState(false)
   useEffect(() => {
@@ -15,12 +14,10 @@ function Home() {
       setLoading(false)     
     }, 500)
     
-    
 
   }, [])
   return (
     <div>
-      
       {loading ? 
       <Spinner/>
       :

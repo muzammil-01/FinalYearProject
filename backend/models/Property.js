@@ -12,7 +12,7 @@ const PropertyDetailsSchema = new Schema({
         type: String,
         required: true,
     },
-    PropertContractAddress: {
+    PropertyContractAddress: {
         type: String,
     },
     OwnerWalletAddress: {
@@ -61,6 +61,10 @@ const PropertyDetailsSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    numberOfSupplies: {
+        type: String,
+        required: true
     },
 })
 module.exports = mongoose.model('property', PropertyDetailsSchema)

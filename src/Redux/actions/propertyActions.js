@@ -21,7 +21,12 @@ if(a){
 }
 
 // Add new property
-export const addProperty = (formData) => async (dispatch) => {
+export const addProperty = (formData,Pricepertoken,CloneOwner,numberOfSupplies,numberOfTokenPerWallet) => async (dispatch) => {
+
+  const SellerWalletAddress = CloneOwner
+  
+  
+  console.log(Pricepertoken,SellerWalletAddress,numberOfSupplies,numberOfTokenPerWallet)
   try {
     dispatch({
       type: ADD_PROPERTY_REQUEST
@@ -32,10 +37,32 @@ export const addProperty = (formData) => async (dispatch) => {
         "auth-token":token
       }
     }
-   
+    
     const  {data}  = await axios.post('http://localhost:3001/api/property/check', formData ,
-     config)
+    config)
     console.log(data)
+    
+    const propertyId = data.addProperty._id
+
+    const testData = {
+      Pricepertoken,SellerWalletAddress,numberOfSupplies,numberOfTokenPerWallet,propertyId
+    }
+
+    console.log("pakistan zindabad")
+
+    const newconfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        "auth-token":token
+
+      }
+    }
+
+     const  {data1}  = await axios.post('http://localhost:3001/api/property/checkToken', testData,newconfig)
+
+     console.log(data1)
+
+      
 
     dispatch({
       type: ADD_PROPERTY_SUCCESS,

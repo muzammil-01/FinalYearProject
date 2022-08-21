@@ -1,5 +1,7 @@
 const express = require('express')
+var mongoose = require('mongoose');
 const Property = require ('../models/Property')
+const ListingToken = require('../models/ListingTokens')
 const {validationResult } = require('express-validator');
 const fetchuser = require('../middleware/fetchuser');
 const router = express.Router()
@@ -17,7 +19,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage})
-const Arrayupload =  upload.fields([{name:"propertyImages",maxCount:100},{name:"propertyDocuments",maxCount:100}]) 
+const Arrayupload =  upload.fields([{name:"propertyImages",maxCount:10},{name:"propertyDocuments",maxCount:10}]) 
 
 
 
@@ -28,9 +30,9 @@ router.get("/allproperties", async(req,res)=>{
     res.json(properties)
 })
 
-
-// add property using route '/api/property/addproperty' Auth required
+// add property using route '/api/property/check' Auth required
 router.post('/check',fetchuser,Arrayupload, async (req, res) => {
+    
     // if there are errors return bad request and errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -46,31 +48,49 @@ router.post('/check',fetchuser,Arrayupload, async (req, res) => {
             arrPropertyDocuments.push(req.files.propertyDocuments[i].originalname)
         }
         addProperty = await Property.create({
-            ownerName: req.body.ownerName,
-            cloneAddress: req.body.cloneAddress,
-            cloneOwner: req.body.cloneOwner,
-            numberOfSupplies: req.body.numberOfSupplies,
-            propertyAddress: req.body.propertyAddress,
-            propertyPrice: req.body.propertyPrice,
-            PricePerToken: req.body.PricePerToken,
+            user:req.user.id,
+            ownerName:req.body.ownerName,
+            PropertyContractAddress:req.body.PropertyContractAddress,
+            OwnerWalletAddress:req.body.OwnerWalletAddress,
+            propertyAddress:req.body.propertyAddress,
+            propertyPrice:req.body.propertyPrice,
             propertyImages:arrPropertyImages,
-            NumberOfTokenPerWallet:req.body.NumberOfTokenPerWallet,
             propertyDocuments:arrPropertyDocuments,
-            beds: req.body.beds,
-            baths: req.body.baths,
-            size: req.body.size,
-            country: req.body.country,
+            beds:req.body.beds,
+            baths:req.body.baths,
+            size:req.body.size,
+            country:req.body.country,
             city: req.body.city,
-            postalcode: req.body.postalcode,
-            user: req.user.id
-        })
+            postalcode:req.body.postalcode,
+            numberOfSupplies:req.body.numberOfSupplies,
+    
+            
+           })
+        console.log({addProperty})
+
         res.json({ addProperty })
     } catch (error) {
         console.error(error.message)
         res.status(500).send("internal server error")
     }
 }) 
-
+ router.post("/checkToken",fetchuser,async (req,res)=>{
+    console.log("hello",req.body)
+        try {
+            listing = await ListingToken.create({
+                user:req.user.id,
+                propertyId: mongoose.Types.ObjectId(req.body.propertyId),
+                SellerWalletAddress:req.body.SellerWalletAddress,
+                TotalSupplies:req.body.numberOfSupplies ,
+                PricePerToken:req.body.PriceperToken,
+                NumberOfTokenPerWallet:req.body.numberOfTokenPerWallet,
+               })
+               console.log({listing})
+               res.json({listing})
+        } catch (error) {
+            
+        }
+ })
 // fetch all user specific properties GET /api/property/userproperties
 router.get("/userproperties", fetchuser, async(req,res)=>{
     try {

@@ -8,7 +8,7 @@ const Buyer = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'listingTokens'
     },
-    SellerWalletAddress: {
+    BuyerWalletAddress: {
         type: String,
         required: true,
     },

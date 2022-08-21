@@ -86,7 +86,7 @@ catch (error) {
     }
 
     return (
-    <div>Mint <button onClick={()=>Mint(2)}>Mint</button></div>
+    <div>Mint <button className='logbtn' onClick={()=>Mint(2)}>Mint</button></div>
   )
 }
 
