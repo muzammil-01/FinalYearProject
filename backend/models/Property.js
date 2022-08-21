@@ -12,15 +12,11 @@ const PropertyDetailsSchema = new Schema({
         type: String,
         required: true,
     },
-    cloneAddress: {
+    PropertContractAddress: {
         type: String,
     },
-    cloneOwner: {
+    OwnerWalletAddress: {
         type: String,
-    },
-    numberOfSupplies: {
-        type: String,
-        required: true
     },
     propertyAddress: {
         type: String,
@@ -30,16 +26,9 @@ const PropertyDetailsSchema = new Schema({
         type: String,
         required: true
     },
-    PricePerToken:{
-        type:String,
-    },
     propertyImages:{
         type:Array,
         required:true
-    },
-    NumberOfTokenPerWallet:{
-        type:String,
-        required:true,
     },
     propertyDocuments:{
         type:Array,
@@ -72,6 +61,6 @@ const PropertyDetailsSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
 })
 module.exports = mongoose.model('property', PropertyDetailsSchema)
