@@ -6,6 +6,8 @@ export default function Slider({id}) {
   const propertyDetails = useSelector(state => state.propertyDetails)
   const { loading, error, property } = propertyDetails
 
+  console.log(property.propertyImages[0])
+
   //   const [result, setResult] = useState([])
   // var res = []
   //   useEffect(() => {

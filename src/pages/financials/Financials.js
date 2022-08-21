@@ -3,9 +3,8 @@ import "./Financials.css"
 import { useSelector } from 'react-redux'
 
 
-function Financials() {
-  const propertyDetails = useSelector(state => state.propertyDetails)
-  const { loading, error, property } = propertyDetails
+function Financials({property}) {
+ 
   return (
 <>
        <h2 className='financial-heading'>Property Financials</h2>

@@ -4,10 +4,7 @@ import './Details.css'
 import { useSelector } from 'react-redux'
 
 
-function Details() {
-
-  const propertyDetails = useSelector(state => state.propertyDetails)
-  const { loading, error, property } = propertyDetails
+function Details({property}) {
   console.log(property)
 
   

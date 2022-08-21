@@ -72,6 +72,11 @@ const PropertyDetailsSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    reseller:{         
+        type:[Object],
+        default:null
+        //[{ quantity:"",tokenPerPrice:"",walletAddress:""},...]
     }
 })
 module.exports = mongoose.model('property', PropertyDetailsSchema)
