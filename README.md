@@ -46,6 +46,14 @@ Creating a blockchain web 3 Fractional And Frictionless RealEstate Website. User
 - Drag and drop markdown and HTML files into Dillinger
 - Export documents as Markdown, HTML and PDF
 
+# HomePage
+![image](https://user-images.githubusercontent.com/92223697/185978096-5d91fcbd-cd34-4e62-ab5c-b1f66544ccd1.png)
+# Add Properties On Market
+![image](https://user-images.githubusercontent.com/92223697/185978418-f293278b-38ef-42e2-b728-0ae64b0fe519.png)
+
+# Marketplace
+![image](https://user-images.githubusercontent.com/92223697/185978630-49625fb6-2603-4cd0-a06c-911fcff2a0e4.png)
+
 Markdown is a lightweight markup language based on the formatting conventions
 that people naturally use in email.
 As [John Gruber] writes on the [Markdown site][df1]
