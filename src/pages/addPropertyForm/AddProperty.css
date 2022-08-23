@@ -41,4 +41,9 @@
           font-size: 20px;
           border-radius: 2px;
           color: #fff;
+		  transition: 0.3s;
       }
+	  .logbtn :hover{
+		background: rgb(16,146,114);
+		background: linear-gradient(16deg, rgba(16,146,114,0.9248074229691877) 19%, rgba(114,191,201,0.7791491596638656) 73%);
+	  }

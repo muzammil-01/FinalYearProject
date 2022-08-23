@@ -17,8 +17,8 @@ function Details() {
       <h2 className='propertydetails-heading'>PROPERTY DETAILS</h2>
         <div className="property-details">
           <h2>
-            <h5> Property name</h5>
-            <span className='gapleft'>{property.propertyName}</span>
+            <h5> Property Owner's name</h5>
+            <span className='gapleft'>{property.ownerName}</span>
           </h2>
           <h2>
             <h5>Area</h5>
