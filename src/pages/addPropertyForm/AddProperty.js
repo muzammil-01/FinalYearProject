@@ -131,12 +131,52 @@ function AddProperty() {
         formData.append('TotalSupplies', numberOfSupplies)
         formData1.append('NumberOfTokenPerWallet', numberOfTokenPerWallet)
 
-        
+
         if (CloneAddress !== null && CloneOwner !== null) {
-            dispatch(addProperty(formData, Pricepertoken,CloneOwner,numberOfSupplies,numberOfTokenPerWallet))
+            if(ownerName &&
+            numberOfSupplies &&
+            propertyAddress &&
+            propertyPrice &&
+            propertyImages &&
+            numberOfTokenPerWallet &&
+            propertyDocuments &&
+            beds &&
+            baths &&
+            size &&
+            country &&
+            city &&
+            postalcode &&
+            ETHpriceToUSD &&
+            CloneAddress &&
+            CloneOwner &&
+            Pricepertoken
+            ){
+
+                dispatch(addProperty(formData, Pricepertoken, CloneOwner, numberOfSupplies, numberOfTokenPerWallet))
+            setOwnerName(null)
+            setNumberOfSupplies(null)
+            setPropertyAddress(null)
+            setPropertyPrice(null)
+            setPropertyImages(null)
+            setNumberOfTokenPerWallet(null)
+            setPropertyDocuments(null)
+            setBeds(null)
+            setBaths(null)
+            setSize(null)
+            setCountry(null)
+            setCity(null)
+            setPostalCode(null)
+            setETHpriceToUSD(null)
+            setCloneAddress(null)
+            setCloneOwner(null)
+            setPricepertoken(null)
+        }
             
+
+
+
             setUploading(false)
-            // setSuccessfull(true)
+            setSuccessfull(true)
         }
 
     }
@@ -144,7 +184,7 @@ function AddProperty() {
         <>
             <div>
                 {successfull && <SuccessModal />}
-                {/* {uploading && <Spinner />} */}
+                {uploading && <Spinner />}
                 {error && <div className='error'>{message}</div>}
                 <form className="property-form" onSubmit={submitHandler} encType="multipart/form-data">
                     <div className="top-heading">
