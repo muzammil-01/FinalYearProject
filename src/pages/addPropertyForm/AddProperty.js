@@ -182,6 +182,7 @@ function AddProperty() {
     }
     return (
         <>
+        <div className="backgroundImg">
             <div>
                 {successfull && <SuccessModal />}
                 {uploading && <Spinner />}
@@ -203,7 +204,8 @@ function AddProperty() {
                     <input
                         type="Number"
                         name="numberOfSupplies"
-                        value={numberOfSupplies}
+                        // value={numberOfSupplies}
+                        min={0}
                         className="inputs"
                         placeholder="Enter Supplies"
                         required
@@ -223,8 +225,8 @@ function AddProperty() {
                     <input
                         type="Number"
                         name="propertyPrice"
-                        min='0'
-                        value={propertyPrice}
+                        min={0}
+                        // value={propertyPrice}
                         className="inputs"
                         placeholder="Enter property Price"
                         required
@@ -239,14 +241,14 @@ function AddProperty() {
                         className='inputs'
                         multiple
                         onChange={(e) => setPropertyImages(e.target.files)}
-                    />
+                        />
 
                     <input
                         type="Number"
                         name="NumberOfTokenPerWallet"
-                        value={numberOfTokenPerWallet}
+                        // value={numberOfTokenPerWallet}
                         className="inputs"
-                        min='0'
+                        min={0}
                         placeholder="Enter Number of token per share per wallet"
                         required
                         onChange={(e) => setNumberOfTokenPerWallet(e.target.value)} />
@@ -264,8 +266,8 @@ function AddProperty() {
                     <input
                         type="number"
                         name="beds"
-                        min='0'
-                        value={beds}
+                        min={0}
+                        // value={beds}
                         className="inputs"
                         placeholder="No of beds"
                         required
@@ -275,8 +277,8 @@ function AddProperty() {
                     <input
                         type="number"
                         name="baths"
-                        min='0'
-                        value={baths}
+                        min={0}
+                        // value={baths}
                         className="inputs"
                         placeholder="No of baths"
                         required
@@ -287,7 +289,8 @@ function AddProperty() {
                     <input
                         type="Number"
                         name="size"
-                        value={size}
+                        // value={size}
+                        min={0}
                         className="inputs"
                         placeholder="Enter Area in sqft"
                         required
@@ -328,6 +331,7 @@ function AddProperty() {
                     <br />
                 </form>
             </div>
+                        </div>
         </>
     )
 }

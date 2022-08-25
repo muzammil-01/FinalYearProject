@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import './PropertyDetails.css'
 import CenterNavbar from '../../components/centerNavbar/CenterNavbar'
@@ -10,22 +10,35 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Slider from '../../components/slider/Slider'
 import Mint from '../../components/Mint/Mint'
+import MintModel from '../../components/mintModel/MintModel'
 
 
 function PropertyDetails() {
+    const [openModal, setOpenModal] = useState(false)
     const { id } = useParams()
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(listPropertyDetails(id))
     }, [dispatch, id])
 
+    const propertyDetails = useSelector(state => state.propertyDetails)
+    const { loading, error, property } = propertyDetails
+    if (property) {
+        console.log(property)
+    }
+
     return (
         <>
             <Navbar />
-        {/* <Slider/> */}
-            
+            {/* <Slider/> */}
+            {property && openModal && <MintModel setOpenModal={setOpenModal} property={property} />}
 
-            <Mint id={id}/>
+            <button className='logbtn' onClick={() => {
+                setOpenModal(true);
+            }}>Mint</button>
+
+
+            {/* <Mint id={id}/> */}
             <CenterNavbar id={id} />
 
             <div className="about-map">
